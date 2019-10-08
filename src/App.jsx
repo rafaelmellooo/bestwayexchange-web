@@ -10,16 +10,6 @@ export default function App() {
     <div className="App">
       <Header />
       <Main />
-      <Main />
-      <Main />
-      <Main />
-      <Main />
-      <Main />
-      <Main />
-      <Main />
-      <Main />
-      <Main />
-      <Main />
       <Footer />
     </div>
   );
