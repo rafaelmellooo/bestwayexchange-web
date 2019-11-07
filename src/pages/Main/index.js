@@ -5,7 +5,7 @@ import './styles.css';
 import china from '../../assets/countries/china.jpg';
 import paris from '../../assets/countries/paris.jpg';
 
-export default function Main() {
+function Main() {
   useEffect(() => {
     // Auto initialize all the things!
     M.AutoInit();
@@ -130,7 +130,6 @@ export default function Main() {
           <div className="filter">
             <div
               className="flip-container"
-              ontouchstart="this.classNameList.toggle('hover');"
             >
               <div className="flipper">
                 <div className="front p_div_filter a" style={{ backgroundImage: `url(${require('../../assets/thumbnails/1.jpg')})` }}>
@@ -155,7 +154,6 @@ export default function Main() {
           <div className="filter">
             <div
               className="flip-container"
-              ontouchstart="this.classNameList.toggle('hover');"
             >
               <div className="flipper">
                 <div className="front p_div_filter a2" style={{ backgroundImage: `url(${require('../../assets/thumbnails/2.jpg')})` }}>
@@ -182,7 +180,6 @@ export default function Main() {
           <div className="filter">
             <div
               className="flip-container"
-              ontouchstart="this.classNameList.toggle('hover');"
             >
               <div className="flipper">
                 <div className="front p_div_filter a3" style={{ backgroundImage: `url(${require('../../assets/thumbnails/3.jpg')})` }}>
@@ -207,7 +204,6 @@ export default function Main() {
           <div className="filter">
             <div
               className="flip-container"
-              ontouchstart="this.classNameList.toggle('hover');"
             >
               <div className="flipper">
                 <div className="front p_div_filter a4" style={{ backgroundImage: `url(${require('../../assets/thumbnails/4.jpg')})` }}>
@@ -234,7 +230,6 @@ export default function Main() {
           <div className="filter">
             <div
               className="flip-container"
-              ontouchstart="this.classNameList.toggle('hover');"
             >
               <div className="flipper">
                 <div className="front p_div_filter a5" style={{ backgroundImage: `url(${require('../../assets/thumbnails/5.jpg')})` }}>
@@ -259,7 +254,6 @@ export default function Main() {
           <div className="filter">
             <div
               className="flip-container"
-              ontouchstart="this.classNameList.toggle('hover');"
             >
               <div className="flipper">
                 <div className="front p_div_filter a6" style={{ backgroundImage: `url(${require('../../assets/thumbnails/6.jpg')})` }}>
@@ -285,3 +279,5 @@ export default function Main() {
     </>
   );
 }
+
+export default Main;

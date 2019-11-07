@@ -1,3 +1,9 @@
 .a, .a2, .a3, .a4, .a5, .a6 {
   background-size: cover;
 }
+
+.logotipo {
+  width: 55%;
+  height: 38%;
+  margin-left: 10px;
+} 

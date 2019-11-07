@@ -1,14 +1,11 @@
 .intercambios {
-  width: 80%;
-  height: 300px;
+  width: 80%; 
   background-color: white;
   text-align: center;
 }
-
+ 
 .intercambios_bigdiv {
   display: flex;
   justify-content: center;
-  background-color: blue;
   width: 80%;
-  height: 400px;
 }
