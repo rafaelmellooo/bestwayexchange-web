@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Choice } from '@rocketseat/unform';
 import { BounceLoader } from 'react-spinners';
 import M from 'materialize-css';
 import api from '../../services/api';
@@ -20,6 +19,7 @@ function Search() {
     const { data } = await api.get('/exchanges', {
       params: {
         page,
+        languages: [1, 2, 3],
       },
     });
     setLoading(false);
@@ -41,12 +41,6 @@ function Search() {
 
   const loadLanguages = async () => {
     const { data } = await api.get('/languages');
-
-    // data.map((language) => {
-    //   setLanguages(language.push());
-    // });
-
-    // global.console.log(data);
 
     setLanguages(data);
   };
@@ -90,7 +84,7 @@ function Search() {
           backgroundColor: '#eeeeee', width: '90%', paddingTop: '55px',
         }}
         >
-          <Form
+          <div
             className="font_filters"
             style={{
               height: '100%', backgroundColor: '#eeeeee', width: '20%', float: 'left', paddingLeft: '2%',
@@ -102,135 +96,57 @@ function Search() {
                 <i className="material-icons">filter_list</i>
               </h5>
             </div>
-            <br />
-            <p>Sua idade</p>
-            <p>
-              <label htmlFor="teenager">
-                <input id="teenager" type="checkbox" className="filled-in" />
-                <span>12-17</span>
-              </label>
-            </p>
-            {/* <Choice
-              name="languages"
-              option={languages}
-              multiple
-            /> */}
-            <p>
-              <label htmlFor="adult">
-                <input type="checkbox" className="filled-in" />
-                <span>18+</span>
-              </label>
-            </p>
-            <br />
-            <p>Tipo de intercambio</p>
-            <p>
-              <label htmlFor="work-experience">
-                <input id="work-experience" type="checkbox" className="filled-in" />
-                <span>Work Experience</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="idiom-courses">
-                <input id="idiom-courses" type="checkbox" className="filled-in" />
-                <span>Curso de idiomas</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="teen-vacation">
-                <input id="teen-vacation" type="checkbox" className="filled-in" />
-                <span>Ferias teen</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="tecnical-courses">
-                <input id="tecnical-courses" type="checkbox" className="filled-in" />
-                <span>Cursos técnicos</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="study-and-internship">
-                <input id="study-and-internship" type="checkbox" className="filled-in" />
-                <span>Estudo&Estágio</span>
-              </label>
-            </p>
-            <br />
-            <p>Linguas faladas no país</p>
-            <p>
-              <label htmlFor="english">
-                <input id="english" type="checkbox" className="filled-in" />
-                <span>Inglês</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="spanish">
-                <input id="spanish" type="checkbox" className="filled-in" />
-                <span>Espanhol</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="french">
-                <input id="french" type="checkbox" className="filled-in" />
-                <span>Francês</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="chinese">
-                <input id="chinese" type="checkbox" className="filled-in" />
-                <span>Chinês</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="japanese">
-                <input id="japanese" type="checkbox" className="filled-in" />
-                <span>Japonês</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="german">
-                <input id="german" type="checkbox" className="filled-in" />
-                <span>Alemão</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="netherland">
-                <input id="netherland" type="checkbox" className="filled-in" />
-                <span>Holandês</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="italian">
-                <input id="italian" type="checkbox" className="filled-in" />
-                <span>Italiano</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="others">
-                <input id="others" type="checkbox" className="filled-in" />
-                <span>Outros</span>
-              </label>
-            </p>
-            <br />
-            <p>Moradia</p>
-            <p>
-              <label htmlFor="host-family">
-                <input id="host-family" type="checkbox" className="filled-in" />
-                <span>Host-Family</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="student-residence">
-                <input id="student-residence" type="checkbox" className="filled-in" />
-                <span>Residência Estudantil</span>
-              </label>
-            </p>
-            <p>
-              <label htmlFor="hostel">
-                <input id="hostel" type="checkbox" className="filled-in" />
-                <span>Hostel</span>
-              </label>
-            </p>
-            <br />
-          </Form>
+            <p>País</p>
+            <div className="input-field">
+              <select>
+                <option value="" disabled selected>Choose your option</option>
+                {
+                  countries.map((country) => (
+                    <option key={country.id} value={country.id}>{country.name}</option>
+                  ))
+                }
+              </select>
+            </div>
+            <p>Tipo(s) de intercâmbio</p>
+            {
+              exchangeTypes.map((exchangeType) => (
+                <div className="row" key={exchangeType.id}>
+                  <label htmlFor={`eT${exchangeType.id}`}>
+                    <input
+                      id={`eT${exchangeType.id}`}
+                      name="exchangeTypeId"
+                      value={exchangeType.id}
+                      type="checkbox"
+                      className="filled-in"
+                    />
+                    <span>{exchangeType.name}</span>
+                  </label>
+                </div>
+              ))
+            }
+            <p>Idioma(s)</p>
+            {
+              languages.map((language) => (
+                <div className="row" key={language.id}>
+                  <label htmlFor={`l${language.id}`}>
+                    <input id={`l${language.id}`} name="languagesId" value={language.id} type="checkbox" className="filled-in" />
+                    <span>{language.name}</span>
+                  </label>
+                </div>
+              ))
+            }
+            <p>Tipo(s) de moradia</p>
+            {
+              housingTypes.map((housingType) => (
+                <div className="row" key={housingType.id}>
+                  <label htmlFor={`hT${housingType.id}`}>
+                    <input id={`hT${housingType.id}`} name="housingTypesId" value={housingType.id} type="checkbox" className="filled-in" />
+                    <span>{housingType.name}</span>
+                  </label>
+                </div>
+              ))
+            }
+          </div>
 
           <BounceLoader
             color="#673ab7"

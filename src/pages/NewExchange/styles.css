@@ -1,22 +1,17 @@
-.space {
-  margin-top: 100px;
-}
-
-body {
-  margin: 0;
-  padding: 0;
+main {
   background-attachment: fixed;
   background-size: cover;
+  padding-top: 50px;
 }
 
 .forms {
   width: 100%;
   padding: 25px;
-  margin-top: -50px;
+
 }
 
 h5 {
-  background-color: #5e35b1;
+  background-color: #4527a0;
   padding: 15px;
   padding-left: 25px;
   color: white;
@@ -31,12 +26,16 @@ h5 {
   height: auto;
   width: 800px;
   margin: auto;
-  background-color: white;
+  background-color: rgba(255, 255, 255);
 }
 
-.row {
-  margin-bottom: 0;
-  margin-top: 20px;
+textarea {
+  resize: none;
+  height: 125px;
+}
+
+.btn-area {
+  text-align: right;
 }
 
 label#thumbnail {

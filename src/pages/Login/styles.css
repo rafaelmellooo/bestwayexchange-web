@@ -1,32 +1,22 @@
-.letra {
-  font-size: 13px;
+a:hover {
+  background-color: none !important;
 }
 
-label {
-  color: black; font-size: 12px;
-}
-
-.space{
-  margin-top: 120px;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  /* background-image: url(../../assets/login.jpg); */
+main {
   background-attachment: fixed;
   background-size: cover;
-  font-family: 'Open Sans', sans-serif;
+  width: 100%;
+  padding-top: 100px;
 }
 
-.logotipo {
-  width: 55%;
-  height: 38%;
-  margin-left: 10px;
+.login {
+  width: 500px;
+  background-color: white;
+  margin: auto;
 }
 
 h5 {
-  background-color: #512da8;
+  background-color: #4527a0;
   padding: 15px;
   padding-left: 25px;
   color: white;
@@ -34,28 +24,13 @@ h5 {
   height: 50px;
   font-size: 20px;
   margin-top: 0;
-  opacity: 0.9;
 }
 
-#mainContainer {
-  width: 500px;
-  background-color: white;
-  margin: auto;
-}
-
-.innerContainer {
+.conteudoInterno {
   width: 100%;
   padding-left: 25px;
   padding-right: 25px;
   padding-bottom: 25px;
-}
-
-input[type=text]:hover {
-  border-bottom: 1.5px outset purple;
-}
-
-input[type=text]:active {
-  border-bottom: 1.5px outset purple;
 }
 
 .row {
@@ -63,23 +38,57 @@ input[type=text]:active {
   margin-top: 20px;
 }
 
-p {
-  margin-block-start: 0;
-  margin-block-end: 0;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+.espacamento {
+  text-align: center;
 }
 
-.noAcc {
-  margin-top: 0;
-  margin-left: 185px;
+.semConta {
+  font-size: 13px;
   margin-top: 15px;
-}
-
-.noAccount {
-  font-size: 10.5px;
-  margin-top: 15px;
-  margin-left: -45px;
-  color: #512da8;
+  color: #4527a0;
   font-weight: bold;
+}
+
+/* MEDIA QUERY */
+
+/* CELULAR DE PÉ */
+
+@media screen and (max-width: 450px) {
+  main {
+      padding-top: 100px;
+  }
+
+  .login {
+      width: 350px;
+      height: 360px;
+  }
+
+}
+
+/* CELULAR DEITADO */
+
+@media screen and (min-width: 451px) and (max-width: 700px) {
+  main {
+      padding-top: 100px;
+  }
+
+  .login {
+      width: 450px;
+      height: 360px;
+  }
+
+}
+
+
+/* TABLET DE PÉ */
+@media screen and (min-width: 700px) and (max-width: 960px) {
+  main {
+      padding-top: 100px;
+  }
+
+  .login {
+      width: 450px;
+      height: 350px;
+  }
+
 }

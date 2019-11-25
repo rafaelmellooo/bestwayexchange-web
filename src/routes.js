@@ -2,7 +2,8 @@ import React from 'react';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import CreateAgency from './pages/CreateAgency';
+import NewAgency from './pages/NewAgency';
+import NewExchange from './pages/NewExchange';
 import Login from './pages/Login';
 import Main from './pages/Main';
 import Register from './pages/Register';
@@ -12,10 +13,11 @@ const Routes = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Main} />
+      <Route path="/agencies/new" component={NewAgency} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/search" component={Search} />
-      <Route path="/create_agency" component={CreateAgency} />
+      <Route path="/exchanges/new" component={NewExchange} />
     </Switch>
   </BrowserRouter>
 );
