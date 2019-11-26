@@ -11,6 +11,7 @@ import Search from './pages/Search';
 import Chat from './pages/Chat';
 import NewRate from './pages/NewRate';
 import AgencyDashboard from './pages/AgencyDashboard';
+import ExchangeDashboard from './pages/ExchangeDashboard';
 
 const Routes = () => (
   <BrowserRouter>
@@ -24,6 +25,7 @@ const Routes = () => (
       <Route path="/chats/:id" component={Chat} />
       <Route path="/rates/new" component={NewRate} />
       <Route path="/agencies/:id/dashboard" component={AgencyDashboard} />
+      <Route path="/exchanges/:id/dashboard" component={ExchangeDashboard} />
     </Switch>
   </BrowserRouter>
 );

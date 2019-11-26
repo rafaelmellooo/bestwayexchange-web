@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
 import { BounceLoader } from 'react-spinners';
 import M from 'materialize-css';
 import api from '../../services/api';
 import './styles.css';
-import unavailable from '../../assets/unavailable.png';
+
+const orders = [
+  {
+    value: 'price',
+    label: 'Menor preço'
+  },
+  {
+    value: 'createdAt',
+    label: 'Mais recentes'
+  },
+  {
+    value: 'time',
+    label: 'Menor duração'
+  }
+];
 
 function Search() {
   const [exchanges, setExchanges] = useState([]);
@@ -11,15 +26,25 @@ function Search() {
   const [housingTypes, setHousingTypes] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [selectedExchangeType, setSelectedExchangeType] = useState(null);
+  const [selectedCities, setSelectedCities] = useState([]);
+  const [selectedHousingTypes, setSelectedHousingTypes] = useState([]);
+  const [selectedOrder, setSelectedOrder] = useState(orders[0].value);
 
   const loadExchanges = async () => {
     setLoading(true);
     const { data } = await api.get('/exchanges', {
       params: {
         page,
-        languages: [1, 2, 3],
+        languages: selectedLanguages.join(','),
+        exchangeTypes: selectedExchangeType,
+        city: selectedCities.join(','),
+        housingTypes: selectedHousingTypes.join(','),
+        order: selectedOrder
       },
     });
     setLoading(false);
@@ -30,25 +55,31 @@ function Search() {
   const loadExchangeTypes = async () => {
     const { data } = await api.get('/exchange_types');
 
-    setExchangeTypes(data);
+    setExchangeTypes(data.map(({ id, name }) => ({ value: id, label: name })));
   };
 
   const loadHousingTypes = async () => {
     const { data } = await api.get('/housing_types');
 
-    setHousingTypes(data);
+    setHousingTypes(data.map(({ id, name }) => ({ value: id, label: name })));
   };
 
   const loadLanguages = async () => {
     const { data } = await api.get('/languages');
 
-    setLanguages(data);
+    setLanguages(data.map(({ id, name }) => ({ value: id, label: name })));
   };
 
   const loadCountries = async () => {
     const { data } = await api.get('/countries');
 
-    setCountries(data);
+    setCountries(data.map(({ id, name }) => ({ value: id, label: name })));
+  };
+
+  const loadCities = async (value) => {
+    const { data } = await api.get(`/countries/${value}/cities`);
+
+    setCities(data.map(({ id, name }) => ({ value: id, label: name })));
   };
 
   const nextPage = () => {
@@ -69,6 +100,26 @@ function Search() {
     loadLanguages();
     loadCountries();
   }, []);
+
+  useEffect(() => {
+    loadExchanges();
+  }, [selectedLanguages]);
+
+  useEffect(() => {
+    loadExchanges();
+  }, [selectedExchangeType]);
+
+  useEffect(() => {
+    loadExchanges();
+  }, [selectedCities]);
+
+  useEffect(() => {
+    loadExchanges();
+  }, [selectedHousingTypes]);
+
+  useEffect(() => {
+    loadExchanges();
+  }, [selectedOrder]);
 
   useEffect(() => {
     loadExchanges();
@@ -96,56 +147,61 @@ function Search() {
                 <i className="material-icons">filter_list</i>
               </h5>
             </div>
-            <p>País</p>
-            <div className="input-field">
-              <select>
-                <option value="" disabled selected>Choose your option</option>
-                {
-                  countries.map((country) => (
-                    <option key={country.id} value={country.id}>{country.name}</option>
-                  ))
-                }
-              </select>
-            </div>
-            <p>Tipo(s) de intercâmbio</p>
-            {
-              exchangeTypes.map((exchangeType) => (
-                <div className="row" key={exchangeType.id}>
-                  <label htmlFor={`eT${exchangeType.id}`}>
-                    <input
-                      id={`eT${exchangeType.id}`}
-                      name="exchangeTypeId"
-                      value={exchangeType.id}
-                      type="checkbox"
-                      className="filled-in"
-                    />
-                    <span>{exchangeType.name}</span>
-                  </label>
-                </div>
-              ))
-            }
-            <p>Idioma(s)</p>
-            {
-              languages.map((language) => (
-                <div className="row" key={language.id}>
-                  <label htmlFor={`l${language.id}`}>
-                    <input id={`l${language.id}`} name="languagesId" value={language.id} type="checkbox" className="filled-in" />
-                    <span>{language.name}</span>
-                  </label>
-                </div>
-              ))
-            }
-            <p>Tipo(s) de moradia</p>
-            {
-              housingTypes.map((housingType) => (
-                <div className="row" key={housingType.id}>
-                  <label htmlFor={`hT${housingType.id}`}>
-                    <input id={`hT${housingType.id}`} name="housingTypesId" value={housingType.id} type="checkbox" className="filled-in" />
-                    <span>{housingType.name}</span>
-                  </label>
-                </div>
-              ))
-            }
+            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Ordenar por</p>
+            <Select
+              isSearchable
+              name="order"
+              defaultValue={orders[0]}
+              options={orders}
+              onChange={({ value }) => setSelectedOrder(value)}
+            />
+            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>País</p>
+            <Select
+              isSearchable
+              name="country"
+              isLoading={!countries}
+              options={countries}
+              onChange={({ value }) => loadCities(value)}
+            />
+            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Cidade(s)</p>
+            <Select
+              isSearchable
+              name="cities"
+              isClearable
+              isMulti
+              isLoading={!cities}
+              options={cities}
+              onChange={(event) => setSelectedCities(event.map(({ value }) => value))}
+            />
+            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Tipo de Intercâmbio</p>
+            <Select
+              isSearchable
+              isClearable
+              name="exchangeType"
+              isLoading={!exchangeTypes}
+              options={exchangeTypes}
+              onChange={({ value }) => setSelectedExchangeType(value)}
+            />
+            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Idioma(s)</p>
+            <Select
+              isSearchable
+              isClearable
+              isMulti
+              name="languages"
+              isLoading={!languages}
+              options={languages}
+              onChange={(event) => setSelectedLanguages(event.map(({ value }) => value))}
+            />
+            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Tipos de Moradia</p>
+            <Select
+              isSearchable
+              isClearable
+              isMulti
+              name="housingTypes"
+              isLoading={!housingTypes}
+              options={housingTypes}
+              onChange={(event) => setSelectedHousingTypes(event.map(({ value }) => value))}
+            />
           </div>
 
           <BounceLoader
@@ -166,7 +222,7 @@ function Search() {
                     }}
                     >
                       <figure style={{ margin: 0, marginLeft: 0 }}>
-                        <img src={exchange.image ? exchange.image : unavailable} alt={exchange.name} style={{ width: '95%', marginTop: '12px' }} />
+                        <img src={exchange.filename ? `http://localhost:3333/files/${exchange.filename}` : ''} alt={exchange.name} style={{ width: '95%', marginTop: '12px' }} />
                       </figure>
                     </div>
                     <div style={{

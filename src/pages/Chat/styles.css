@@ -135,8 +135,8 @@ main {
 .other-ballon p {
   min-height: 50px;
   height: auto;
-  min-width: 70px !important;
-  max-width: 250px;
+  min-width: auto !important;
+  max-width: 75%;
   background-color: rgba(209, 196, 233, 0.55);
   color: black;
   text-align: left;
@@ -156,8 +156,8 @@ main {
   margin-top: 5px;
   min-height: 35px;
   height: auto;
-  min-width: 35px;
-  max-width: 250px;
+  min-width: auto !important;
+  max-width: 75%;
   background-color: #673ab7;
   color: white;
   text-align: justify;
