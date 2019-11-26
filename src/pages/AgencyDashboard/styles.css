@@ -1,0 +1,295 @@
+.main-container {
+  margin: auto;
+  width: 100%;
+  height: auto;
+  margin-top: 15px;
+}
+
+.settings-container {
+  padding: 10px;
+  width: 300px;
+  min-height: 600px;
+  border-radius: 7px;
+  margin-left: 10px;
+  height: auto;
+  background-color: #5e35b1;
+  float: left;
+}
+
+.user-area {
+width: 100%;
+height:auto;
+text-align: center;
+}
+
+.area-img-user {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+}
+
+.img-user {
+  width: 175px;
+  height: 175px;
+  border-radius: 100%;
+}
+
+.hi-user {
+  width: 100%;
+  min-height: 50px;
+  height: auto;
+  font-size: 20px;
+  padding: 10px;
+  font-style: italic;
+  color: white;
+}
+
+.topics-area {
+  width: 100%;
+  height: 60%;
+}
+
+.topic {
+  font-size: 15px;
+  background-color: #5e35b1;
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  height: 75px;
+  padding: 25px;
+}
+
+.icon-area {
+  float: left;
+}
+
+.topic-text-area {
+  float: left;
+  margin-left: 25px !important;  
+}
+
+.reports {
+  margin-lefT: 0px !important;
+}
+
+.topic:hover {
+  color: white;
+  background-color: #4527a0;
+}
+
+.topic:active {
+  background-color: #311b92;
+}
+
+.content-container {
+  width: 1100px;
+  min-height: 800px;
+  height: auto;
+  float: left;
+}
+
+.exchange {
+  width: 1000px;
+  height: 450px;
+  margin: auto;
+  background-color: white;
+  margin-top: 25px;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.clearMargin {
+  margin-top: 0px !important;
+}
+
+.exchange-portrait {
+  width: 33%;
+  height: 100%;
+  float: left;
+}
+
+.exchange-picture {
+  width: 100%;
+  height: 100%;
+}
+
+.info-exchange-area {
+  width: 67%;
+  height: 100%;
+  float: left;
+}
+
+.info-exchange {
+  width: 100%;
+  height: 200px;
+}
+
+.exchange-name {
+  text-align: center;
+  height: 30px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.btn-area {
+  width: 100%;
+  height: 75px;
+  text-align: right;
+  padding-right: 25px;
+  padding-top: 0px;
+}
+
+.move-buttons {
+  height: 70px;
+  text-align: center;
+  padding-top: 18px;
+}
+
+.worker {
+  width: 375px;
+  min-height: 700px;
+  height: auto !important;
+  margin-left: 25px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 0 15px;
+  margin-top: -15px;
+}
+
+.workers-container {
+  width: 100%;
+  height: 800px;
+  margin:auto;
+  padding: 15px 0 15px 0;
+  display: flex;
+}
+
+.worker-portrait {
+  width: 100%;
+  height: 30%;
+  text-align: center; 
+}
+
+.worker-picture {
+  margin-top: 15px;
+  display: flex;
+  width: 230px;
+  height: 230px;
+  border-radius: 100%; 
+}
+
+.worker-name {
+  text-align: center;
+  min-height: 35px;
+  height: auto;
+  width: 100%;
+  background-color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.info-worker-area {
+  width: 100%;
+  height: 67%;
+}
+
+.info-worker {
+  height: 85%;
+}
+
+.btn-worker-area {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.first-worker {
+  margin-top: 0px !important;
+}
+
+.area-btn-navigate {
+  height: 100%;
+  width: auto;
+  display: flex;
+  padding-top: 320px;
+}
+
+.right-side {
+  margin-left: 15px;
+}
+
+.company-settings {
+  width: 850px;
+  padding-left: 20px;
+}
+
+.company-info-area {
+  border-radius: 7px;
+  padding: 20px;
+  width: 800px;
+  background-color: white;
+}
+
+.img-banner {
+  margin-top: 10px;
+  width: 350px;
+  border-radius: 10px;
+  height: 175px;
+}
+
+.first-part {
+  float: left;
+  width: 49%;
+}
+
+.second-part {
+  float: left;
+  width: 49%;
+  margin-left: 15px;
+}
+
+.company-date {
+  height: 300px;
+  margin: auto !important;
+}
+
+.company-address-area {
+  min-height: 300px;
+  height: auto;
+  margin: auto !important;
+}
+
+.address-line {
+  min-height: 100px;
+  margin: auto;
+  height: auto;
+  background-color: white;
+}
+
+.btn-address-area {
+  text-align: right;
+  margin-top: 35px;
+}
+
+.btn-add-address-area {
+  width: 100%;
+  height: 50px;
+}
+
+.add {
+  width: 60px;
+  height: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.address-name {
+  font-size: 25px;
+  height: auto;
+  background-color: #5e35b1;
+  color: white;
+  text-align: center;
+}

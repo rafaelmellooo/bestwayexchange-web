@@ -8,6 +8,9 @@ import Login from './pages/Login';
 import Main from './pages/Main';
 import Register from './pages/Register';
 import Search from './pages/Search';
+import Chat from './pages/Chat';
+import NewRate from './pages/NewRate';
+import AgencyDashboard from './pages/AgencyDashboard';
 
 const Routes = () => (
   <BrowserRouter>
@@ -18,6 +21,9 @@ const Routes = () => (
       <Route path="/register" component={Register} />
       <Route path="/search" component={Search} />
       <Route path="/exchanges/new" component={NewExchange} />
+      <Route path="/chats/:id" component={Chat} />
+      <Route path="/rates/new" component={NewRate} />
+      <Route path="/agencies/:id/dashboard" component={AgencyDashboard} />
     </Switch>
   </BrowserRouter>
 );
