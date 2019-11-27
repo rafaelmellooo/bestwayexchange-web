@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from '@rocketseat/unform';
-import PropTypes from 'prop-types';
 import api from '../../services/api';
 
 import './styles.css';
@@ -8,6 +7,7 @@ import './styles.css';
 function Chat({ match }) {
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [selectedChat, setSelectedChat] = useState(null);
 
   const loadChats = async () => {
     const { data } = await api.get('/chats');
@@ -16,7 +16,7 @@ function Chat({ match }) {
   };
 
   const loadMessages = async () => {
-    const { data } = await api.get(`/chats/${match.params.id}`)
+    const { data } = await api.get(`/chats/${match.params.id}`);
 
     setMessages(data.docs);
   };
@@ -29,8 +29,14 @@ function Chat({ match }) {
     loadMessages();
   }, [match.params.id]);
 
+  useEffect(() => {
+    setSelectedChat(chats[match.params.id]);
+  }, [match.params.id]);
+
   const handleSubmit = async ({ body }) => {
-    await api.post(`/chats/${match.params.id}`, { body });
+    const { data } = await api.post(`/chats/${match.params.id}`, { body });
+
+    setMessages([data, ...messages]);
   };
 
   return (
@@ -50,12 +56,15 @@ function Chat({ match }) {
           {
             chats.map((chat) => (
               <div key={chat.id} className="contatinho">
-                <div className="little-img fl">
+                <div className="little-img">
                   <img src={chat.user.filename ? `http://localhost:3333/files/${chat.user.filename}` : ''} alt={chat.user.name} className="little-img" />
                 </div>
                 <div className="contact-name">
-                  <span className="contact-name">{chat.user.name}</span>
+                  <span>{chat.user.name}</span>
                 </div>
+                {
+                  chat.unseenMessages ? <p className="unseenMessages">{chat.unseenMessages}</p> : ''
+                }
               </div>
             ))
           }
@@ -74,11 +83,11 @@ function Chat({ match }) {
           <div id="area-chat">
             {
               messages.map((message) => (
-                <div key={message.createdAt} className={message.from === 8 ? 'my-ballon' : 'other-ballon'}>
+                <div key={message.createdAt} className={message.from === selectedChat.user.id ? 'other-ballon' : 'my-ballon'}>
                   <p>
                     {message.body && message.body}
                     {message.filename && message.filename}
-                    <br/>
+                    <br />
                     <span style={{ fontSize: '10px', fontWeight: 'bold' }}>{message.createdAt}</span>
                   </p>
                 </div>
@@ -132,13 +141,5 @@ function Chat({ match }) {
     </main>
   );
 }
-
-Chat.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.any.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
 
 export default Chat;

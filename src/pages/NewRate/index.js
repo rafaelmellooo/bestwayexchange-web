@@ -1,169 +1,100 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input } from '@rocketseat/unform';
+import * as Yup from 'yup';
+import api from '../../services/api';
 
 import './styles.css';
 
+const options = [
+  {
+    value: 1,
+    label: '1',
+  },
+  {
+    value: 2,
+    label: '2',
+  },
+  {
+    value: 3,
+    label: '3',
+  },
+  {
+    value: 4,
+    label: '4',
+  },
+  {
+    value: 5,
+    label: '5',
+  },
+];
+
+const schema = Yup.object().shape({
+  description: Yup.string()
+    .required('A descrição não deve ser nula'),
+});
+
 function NewRate() {
+  const [items, setItems] = useState([]);
+
+  const handleSubmit = async ({ description }) => {
+    await api.put('/exchanges/30/rate', { description, items });
+  };
+
   return (
-    <main>
+    <main style={{ marginBottom: '20px' }}>
       <div className="main-container">
-        <h5>Avaliações</h5>
-        <h6>Custo-Benefício</h6>
-        <div className="first-rate-area rate-space">
-          <form>
-            <div className="row">
-              <div className="col s1" />
-              <div className="col s2">
+        <Form schema={schema} onSubmit={handleSubmit}>
+          <h6 className="title">Custo-Benefício</h6>
+          <div className="division">
+            {
+              options.map(({ value, label }) => (
                 <p>
-                  <label>
-                    <input name="group1" type="radio" />
-                    <span>1</span>
+                  <label htmlFor={`1,${value}`}>
+                    <input onChange={(event) => global.console.log(event)} id={`1,${value}`} name="1" value={value} type="radio" />
+                    <span>{label}</span>
                   </label>
                 </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group1" type="radio" />
-                    <span>2</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group1" type="radio" />
-                    <span>3</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group1" type="radio" />
-                    <span>4</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group1" type="radio" />
-                    <span>5</span>
-                  </label>
-                </p>
-              </div>
-            </div>
-          </form>
-        </div>
+              ))
+            }
+          </div>
 
-        <h6>Experiência de Intercâmbio</h6>
-        <div className="second-rate-area rate-space">
-          <form>
-            <div className="row">
-              <div className="col s1" />
-              <div className="col s2">
+          <h6 className="title">Experiência de Intercâmbio</h6>
+          <div className="division">
+            {
+              options.map(({ value, label }) => (
                 <p>
-                  <label>
-                    <input name="group2" type="radio" />
-                    <span>1</span>
+                  <label htmlFor={`2,${value}`}>
+                    <input id={`2,${value}`} name="2" value={value} type="radio" />
+                    <span>{label}</span>
                   </label>
                 </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group2" type="radio" />
-                    <span>2</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group2" type="radio" />
-                    <span>3</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group2" type="radio" />
-                    <span>4</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group2" type="radio" />
-                    <span>5</span>
-                  </label>
-                </p>
-              </div>
-            </div>
-          </form>
-        </div>
+              ))
+            }
+          </div>
 
-        <h6>Atendimento</h6>
-        <div className="third-rate-area rate-space">
-          <form>
-            <div className="row">
-              <div className="col s1" />
-              <div className="col s2">
+          <h6 className="title">Atendimento</h6>
+          <div className="division">
+            {
+              options.map(({ value, label }) => (
                 <p>
-                  <label>
-                    <input name="group3" type="radio" />
-                    <span>1</span>
+                  <label htmlFor={`3,${value}`}>
+                    <input id={`3,${value}`} name="3" value={value} type="radio" />
+                    <span>{label}</span>
                   </label>
                 </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group3" type="radio" />
-                    <span>2</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group3" type="radio" />
-                    <span>3</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group3" type="radio" />
-                    <span>4</span>
-                  </label>
-                </p>
-              </div>
-              <div className="col s2">
-                <p>
-                  <label>
-                    <input name="group3" type="radio" />
-                    <span>5</span>
-                  </label>
-                </p>
-              </div>
-            </div>
-          </form>
-        </div>
+              ))
+            }
+          </div>
 
-        <h6>Descrição da Avaliação</h6>
-        <div className="description-area">
-          <textarea />
-        </div>
+          <h6 className="title">Descrição</h6>
+          <div className="description-area">
+            <Input name="description" />
+          </div>
 
-        <div className="area-button">
-          <button type="submit" className="btn deep-purple darken-2">Finalizar</button>
-        </div>
-
+          <div className="area-button">
+            <button type="submit" className="btn deep-purple darken-2">Finalizar</button>
+          </div>
+        </Form>
       </div>
     </main>
   );

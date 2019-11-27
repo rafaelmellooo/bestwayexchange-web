@@ -63,10 +63,26 @@ main {
 }
 
 .contatinho {
-  padding-top: 9.5px;
-  padding-left: 10px;
-  height: 70px;
-  border-bottom: 1px solid white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: thin solid white;
+  border-bottom: thin solid white;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.unseenMessages {
+  border-radius: 50%;
+  background-color: #673ab7;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
 }
 
 .contatinho:hover {
@@ -75,11 +91,6 @@ main {
 
 .contatinho:active {
   background-color: rgb(167, 159, 170);
-}
-
-.contact-name {
-  margin-left: 10px;
-  margin-top: 15px;
 }
 
 .middle-part {
@@ -100,7 +111,7 @@ main {
 .little-img {
   width: 50px;
   height: 50px;
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
 .written-part {

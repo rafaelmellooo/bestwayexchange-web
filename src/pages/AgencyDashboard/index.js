@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 
 import './styles.css';
 
 function AgencyDashboard({ match }) {
   useEffect(() => {
-
-  }, []);
-
-  useEffect(() => {
-
+    global.console.log();
   }, [match.params.id]);
 
   return (
@@ -475,13 +470,5 @@ HUAHUHSIHAIDUIDHEDHUAIHDAEUIDHEAUIDHEAUIDHEAUIDHAEDUIAHDAEUIDAEH
     </main>
   );
 }
-
-AgencyDashboard.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.any.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
 
 export default AgencyDashboard;
