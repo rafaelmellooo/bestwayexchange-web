@@ -23,7 +23,7 @@ function ExchangeDashboard({ match, history }) {
   };
 
   const handleClick = async () => {
-    const { data } = api.post('/chats', {
+    const { data } = await api.post('/chats', {
       exchangeId: match.params.id,
     });
 
@@ -132,7 +132,7 @@ Detalhes
               </div>
 
               <div>
-                <div style={{ marginTop: '100px' }} className="center contact">
+                <div style={{ marginTop: '10px' }} className="center contact">
                   <button onClick={handleClick} type="button">
                     <i className="small material-icons">message</i>
                     <span>ENTRAR EM CONTATO</span>
@@ -142,19 +142,23 @@ Detalhes
             </div>
 
             <div className="limpar" />
-            <h5 className="explanation">
-              {`Como é o ${exchangeInfo.city.country.name}?`}
-            </h5>
-            <p className="description">{exchangeInfo.city.country.description}</p>
+            <div className="binder">
+              <h5 className="explanation">
+                {`Como é o ${exchangeInfo.city.country.name}?`}
+              </h5>
+              <p className="description">{exchangeInfo.city.country.description}</p>
+            </div>
 
-            <h5 className="explanation">
-              {`O que é o tipo de intercâmbio '${exchangeInfo.exchangeType.name}'?`}
-            </h5>
-            <p className="description">{exchangeInfo.exchangeType.description}</p>
+            <div className="binder">
+              <h5 className="explanation">
+                {`O que é o tipo de intercâmbio '${exchangeInfo.exchangeType.name}'?`}
+              </h5>
+              <p className="description">{exchangeInfo.exchangeType.description}</p>
+            </div>
 
             {
               exchangeInfo.housingTypes.map((housingType) => (
-                <div key={housingType.id}>
+                <div key={housingType.id} className="binder">
                   <h5 className="explanation">
                     {`O que é a moradia '${housingType.name}'?`}
                   </h5>
@@ -165,13 +169,21 @@ Detalhes
 
             <h5>Avaliações</h5>
 
-            <div>
-              <StarRatings
-                rating={5}
-                starRatedColor="yellow"
-                numberOfStars={5}
-              />
-            </div>
+            {
+              rates.map((rate) => (
+                <div key={rate.id} className="rating">
+                  <h6 className="rating-title">{rate.users.name}</h6>
+                  <div style={{ marginLeft: '10px' }}>
+                    <StarRatings
+                      rating={rate.avg}
+                      starRatedColor="yellow"
+                      numberOfStars={5}
+                    />
+                  </div>
+                  <p className="rating-body">{rate.comment}</p>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
