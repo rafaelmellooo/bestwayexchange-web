@@ -21,7 +21,7 @@ function Login() {
   const handleSubmit = async ({ email, password }) => {
     try {
       const { data: { token } } = await api.post('/auth/authenticate', { email, password });
-      
+
       localStorage.setItem('token', token);
 
       const { data: { id } } = await api.get('/dashboard');

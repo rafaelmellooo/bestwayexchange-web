@@ -24,7 +24,7 @@ const schema = Yup.object().shape({
 function Register() {
   const [thumbnail, setThumbnail] = useState(null);
 
-  const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null));
+  const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null), [thumbnail]);
 
   const handleSubmit = async ({
     name, dateOfBirth, email, password,

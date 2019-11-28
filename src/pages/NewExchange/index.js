@@ -69,7 +69,7 @@ function NewExchange() {
     loadHousingTypes();
   }, []);
 
-  const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null));
+  const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null), [thumbnail]);
 
   const handleSubmit = async ({
     name, description, price, time,

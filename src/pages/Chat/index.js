@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import React, { useState, useEffect, useMemo } from 'react';
+import socketio from 'socket.io-client';
+import { BounceLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import api from '../../services/api';
@@ -9,22 +10,26 @@ import './styles.css';
 function Chat({ match }) {
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [receiver, setReceiver] = useState({});
+  const [chatInfo, setChatInfo] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const loadChats = async () => {
     const { data } = await api.get('/chats');
-
-    const chat = data.find(({ id }) => id === Number(match.params.id));
-
-    setReceiver(chat.user || {});
 
     setChats(data);
   };
 
   const loadMessages = async () => {
+    setLoading(true);
     const { data } = await api.get(`/chats/${match.params.id}/messages`);
-
     setMessages(data.docs);
+    setLoading(false);
+  };
+
+  const loadChatInfo = async () => {
+    const { data: { chat, alreadyBought } } = await api.get(`/chats/${match.params.id}`);
+
+    setChatInfo({ ...chat, alreadyBought });
   };
 
   useEffect(() => {
@@ -32,22 +37,23 @@ function Chat({ match }) {
   }, []);
 
   useEffect(() => {
-    loadMessages();
+    loadChatInfo().then(() => loadMessages());
   }, [match.params.id]);
+
+  const userId = localStorage.getItem('id');
+
+  const socket = useMemo(() => socketio('http://localhost:3333', {
+    query: { userId },
+  }), [userId]);
 
   useEffect(() => {
-    const socket = io('http://localhost:3333', {
-      query: { userId: localStorage.getItem('id') },
-    });
-
-    socket.on('response', ({ message }) => {
-      global.console.log(messages, chats, receiver);
+    socket.on('response', (message) => {
       setMessages([message, ...messages]);
     });
-  }, [match.params.id]);
+  }, [messages, socket]);
 
   const handleSubmit = async ({ body }) => {
-    const { data } = await api.post(`/chats/${match.params.id}`, { body });
+    const { data } = await api.post(`/chats/${match.params.id}/messages`, { body });
 
     setMessages([data, ...messages]);
   };
@@ -95,8 +101,14 @@ function Chat({ match }) {
 
           <div id="area-chat">
             {
-              messages.map((message) => (
-                <div key={message.createdAt} className={message.from === receiver.id ? 'other-ballon' : 'my-ballon'}>
+              loading ? (
+                <BounceLoader
+                  color="#673ab7"
+                  sizeUnit="px"
+                  size="100"
+                />
+              ) : messages.map((message) => (
+                <div key={message.createdAt} className={message.from === chatInfo.user.id ? 'other-ballon' : 'my-ballon'}>
                   <p>
                     {message.body && message.body}
                     {message.filename && message.filename}

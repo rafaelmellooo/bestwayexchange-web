@@ -18,7 +18,7 @@ const schema = Yup.object().shape({
 function NewAgency() {
   const [thumbnail, setThumbnail] = useState(null);
 
-  const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null));
+  const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null), [thumbnail]);
 
   const handleSubmit = async ({ name, description }) => {
     const data = new FormData();

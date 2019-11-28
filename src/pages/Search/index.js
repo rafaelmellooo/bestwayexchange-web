@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { BounceLoader } from 'react-spinners';
+import { Link } from 'react-router-dom';
 import M from 'materialize-css';
 import api from '../../services/api';
 import './styles.css';
@@ -8,16 +9,16 @@ import './styles.css';
 const orders = [
   {
     value: 'price',
-    label: 'Menor preço'
+    label: 'Menor preço',
   },
   {
     value: 'createdAt',
-    label: 'Mais recentes'
+    label: 'Mais recentes',
   },
   {
     value: 'time',
-    label: 'Menor duração'
-  }
+    label: 'Menor duração',
+  },
 ];
 
 function Search() {
@@ -28,7 +29,7 @@ function Search() {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
   const [selectedExchangeType, setSelectedExchangeType] = useState(null);
   const [selectedCities, setSelectedCities] = useState([]);
@@ -44,12 +45,11 @@ function Search() {
         exchangeTypes: selectedExchangeType,
         city: selectedCities.join(','),
         housingTypes: selectedHousingTypes.join(','),
-        order: selectedOrder
+        order: selectedOrder,
       },
     });
-    setLoading(false);
-
     setExchanges(data.docs);
+    setLoading(false);
   };
 
   const loadExchangeTypes = async () => {
@@ -103,27 +103,14 @@ function Search() {
 
   useEffect(() => {
     loadExchanges();
-  }, [selectedLanguages]);
-
-  useEffect(() => {
-    loadExchanges();
-  }, [selectedExchangeType]);
-
-  useEffect(() => {
-    loadExchanges();
-  }, [selectedCities]);
-
-  useEffect(() => {
-    loadExchanges();
-  }, [selectedHousingTypes]);
-
-  useEffect(() => {
-    loadExchanges();
-  }, [selectedOrder]);
-
-  useEffect(() => {
-    loadExchanges();
-  }, [page]);
+  }, [
+    selectedLanguages,
+    selectedExchangeType,
+    selectedCities,
+    selectedHousingTypes,
+    selectedOrder,
+    page,
+  ]);
 
   return (
     <>
@@ -204,17 +191,16 @@ function Search() {
             />
           </div>
 
-          <BounceLoader
-            color="#673ab7"
-            loading={loading}
-            sizeUnit="px"
-            size="100"
-            css={{ marginLeft: '750px' }}
-          />
-
           {
-            exchanges.map((exchange) => (
-              <div key={exchange.id} className="intercambios_bigdiv" style={{ marginTop: '20px' }}>
+            loading ? (
+              <BounceLoader
+                color="#673ab7"
+                sizeUnit="px"
+                size="100"
+                css={{ marginLeft: '750px' }}
+              />
+            ) : exchanges.map((exchange) => (
+              <Link to={`/exchanges/${exchange.id}/dashboard`} key={exchange.id} className="intercambios_bigdiv" style={{ marginTop: '20px' }}>
                 <div style={{ borderRadius: '7px' }} className="intercambios">
                   <div style={{ width: '100%', height: '100%' }}>
                     <div style={{
@@ -251,10 +237,9 @@ function Search() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))
           }
-
           <div style={{
             marginTop: '10px',
             marginBottom: '10px',
