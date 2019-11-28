@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import M from 'materialize-css';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -17,13 +17,16 @@ const schema = Yup.object().shape({
     .required('A senha deve ser informada'),
 });
 
-function Login({ history }) {
+function Login() {
   const handleSubmit = async ({ email, password }) => {
     try {
-      const { data } = await api.post('/auth/authenticate', { email, password });
+      const { data: { token } } = await api.post('/auth/authenticate', { email, password });
+      
+      localStorage.setItem('token', token);
 
-      localStorage.setItem('token', data.token);
-      history.push('/search');
+      const { data: { id } } = await api.get('/dashboard');
+
+      localStorage.setItem('id', id);
     } catch (err) {
       toast.error(err.response.data.error);
     }
@@ -49,9 +52,9 @@ function Login({ history }) {
 
             <div className="row espacamento">
               <input type="submit" value="Logar" className="btn" style={{ backgroundColor: '#4527a0' }} />
-              <a href="register_user.html" target="_blank">
+              <Link to="/register">
                 <p className="semConta">Não tem conta? Cadastre-se aqui!</p>
-              </a>
+              </Link>
             </div>
           </Form>
         </div>

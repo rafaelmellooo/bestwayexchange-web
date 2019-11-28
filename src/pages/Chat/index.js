@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import api from '../../services/api';
 
@@ -7,16 +9,20 @@ import './styles.css';
 function Chat({ match }) {
   const [chats, setChats] = useState([]);
   const [messages, setMessages] = useState([]);
-  const [selectedChat, setSelectedChat] = useState(null);
+  const [receiver, setReceiver] = useState({});
 
   const loadChats = async () => {
     const { data } = await api.get('/chats');
+
+    const chat = data.find(({ id }) => id === Number(match.params.id));
+
+    setReceiver(chat.user || {});
 
     setChats(data);
   };
 
   const loadMessages = async () => {
-    const { data } = await api.get(`/chats/${match.params.id}`);
+    const { data } = await api.get(`/chats/${match.params.id}/messages`);
 
     setMessages(data.docs);
   };
@@ -30,7 +36,14 @@ function Chat({ match }) {
   }, [match.params.id]);
 
   useEffect(() => {
-    setSelectedChat(chats[match.params.id]);
+    const socket = io('http://localhost:3333', {
+      query: { userId: localStorage.getItem('id') },
+    });
+
+    socket.on('response', ({ message }) => {
+      global.console.log(messages, chats, receiver);
+      setMessages([message, ...messages]);
+    });
   }, [match.params.id]);
 
   const handleSubmit = async ({ body }) => {
@@ -55,7 +68,7 @@ function Chat({ match }) {
 
           {
             chats.map((chat) => (
-              <div key={chat.id} className="contatinho">
+              <Link to={`/chats/${chat.id}`} key={chat.id} className="contatinho">
                 <div className="little-img">
                   <img src={chat.user.filename ? `http://localhost:3333/files/${chat.user.filename}` : ''} alt={chat.user.name} className="little-img" />
                 </div>
@@ -65,7 +78,7 @@ function Chat({ match }) {
                 {
                   chat.unseenMessages ? <p className="unseenMessages">{chat.unseenMessages}</p> : ''
                 }
-              </div>
+              </Link>
             ))
           }
         </div>
@@ -83,7 +96,7 @@ function Chat({ match }) {
           <div id="area-chat">
             {
               messages.map((message) => (
-                <div key={message.createdAt} className={message.from === selectedChat.user.id ? 'other-ballon' : 'my-ballon'}>
+                <div key={message.createdAt} className={message.from === receiver.id ? 'other-ballon' : 'my-ballon'}>
                   <p>
                     {message.body && message.body}
                     {message.filename && message.filename}

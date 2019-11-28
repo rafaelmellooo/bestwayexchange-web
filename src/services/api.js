@@ -12,8 +12,4 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-api.interceptors.response.use(() => {
-
-});
-
 export default api;

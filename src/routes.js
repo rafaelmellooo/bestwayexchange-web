@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import history from './history';
+import {
+  BrowserRouter, Switch, Route, Redirect, withRouter,
+} from 'react-router-dom';
 
 import Header from './components/Header';
 
@@ -15,6 +16,8 @@ import NewRate from './pages/NewRate';
 import AgencyDashboard from './pages/AgencyDashboard';
 import ExchangeDashboard from './pages/ExchangeDashboard';
 
+const HeaderWrapper = withRouter(Header);
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -22,25 +25,25 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       localStorage.getItem('token') ? (
         <Component {...props} />
       ) : (
-        history.push('/login')
+        <Redirect to={{ pathname: '/', state: { from: props.location } }} />
       ))}
   />
 );
 
 const Routes = () => (
   <BrowserRouter>
-    <Header />
+    <HeaderWrapper />
     <Switch>
-      <Route history={history} exact path="/" component={Main} />
-      <PrivateRoute history={history} path="/agencies/new" component={NewAgency} />
-      <Route history={history} path="/login" component={Login} />
-      <Route history={history} path="/register" component={Register} />
-      <Route history={history} path="/search" component={Search} />
-      <PrivateRoute history={history} path="/exchanges/new" component={NewExchange} />
-      <PrivateRoute history={history} path="/chats/:id" component={Chat} />
-      <PrivateRoute history={history} path="/rates/new" component={NewRate} />
-      <Route history={history} path="/agencies/:id/dashboard" component={AgencyDashboard} />
-      <Route history={history} path="/exchanges/:id/dashboard" component={ExchangeDashboard} />
+      <Route exact path="/" component={Main} />
+      <PrivateRoute path="/agencies/new" component={NewAgency} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+      <Route path="/search" component={Search} />
+      <PrivateRoute path="/exchanges/new" component={NewExchange} />
+      <PrivateRoute path="/chats/:id" component={Chat} />
+      <PrivateRoute path="/rates/new" component={NewRate} />
+      <Route path="/agencies/:id/dashboard" component={AgencyDashboard} />
+      <Route path="/exchanges/:id/dashboard" component={ExchangeDashboard} />
     </Switch>
   </BrowserRouter>
 );
