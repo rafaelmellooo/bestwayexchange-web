@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 import M from 'materialize-css';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -17,7 +18,7 @@ const schema = Yup.object().shape({
     .required('A senha deve ser informada'),
 });
 
-function Login() {
+function Login({ history, location }) {
   const handleSubmit = async ({ email, password }) => {
     try {
       const { data: { token } } = await api.post('/auth/authenticate', { email, password });
@@ -27,14 +28,37 @@ function Login() {
       const { data: { id } } = await api.get('/dashboard');
 
       localStorage.setItem('id', id);
+
+      history.push('/');
     } catch (err) {
-      toast.error(err.response.data.error);
+      const mistakes = {
+        400: () => toast.error(err.response.data.error),
+        401: () => toast.warn('E-mail não verificado', {
+          onClose: () => history.push('/auth/send_email'),
+        }),
+      };
+
+      mistakes[err.response.status]();
+    }
+  };
+
+  const authenticate = async () => {
+    const { email, token } = queryString.parse(location.search);
+
+    try {
+      await api.post('/auth/confirm_email', { email, token });
+
+      toast.success('E-mail verificado com sucesso');
+    } catch (err) {
+      toast.warn(err.response.data.error);
     }
   };
 
   useEffect(() => {
     // Auto initialize all the things!
     M.AutoInit();
+
+    authenticate();
   }, []);
 
   return (

@@ -21,7 +21,7 @@ const schema = Yup.object().shape({
     .required('A senha deve ser informada'),
 });
 
-function Register() {
+function Register({ history }) {
   const [thumbnail, setThumbnail] = useState(null);
 
   const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null), [thumbnail]);
@@ -39,6 +39,12 @@ function Register() {
 
     try {
       await api.post('/auth/register', data);
+
+      await api.post('/auth/send_email', { email });
+
+      toast.success(`Um e-mail foi enviado para ${email}`, {
+        onClose: () => history.push('/'),
+      });
     } catch (err) {
       toast.error(err.response.data.errors[0].message);
     }

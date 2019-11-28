@@ -1,14 +1,28 @@
-/* eslint-disable global-require */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { BounceLoader } from 'react-spinners';
 import M from 'materialize-css';
+import api from '../../services/api';
 import './styles.css';
-import china from '../../assets/countries/china.jpg';
-import paris from '../../assets/countries/paris.jpg';
+import paris from '../../assets/paris.jpg';
 
 function Main() {
+  const [loading, setLoading] = useState(true);
+  const [ranking, setRanking] = useState([]);
+
+  const loadRanking = async () => {
+    setLoading(true);
+    const { data } = await api.get('/ranking?limit=3');
+    setLoading(false);
+
+    setRanking(data);
+  };
+
   useEffect(() => {
     // Auto initialize all the things!
     M.AutoInit();
+
+    loadRanking();
   }, []);
 
   return (
@@ -18,112 +32,46 @@ function Main() {
       </div>
 
       <div>
-        <p className="font"> Melhores preços</p>
+        <h5 className="title center" style={{ fontSize: '22px', marginTop: 0 }}>Ranking</h5>
       </div>
 
       <div className="flex" style={{ display: 'flex', justifyContent: 'center' }}>
-        <div className="fl">
-          <div style={{ marginLeft: '25px', marginRight: '25px' }} className="tamanho_card fl">
-            <div className="card">
-              <div className="card-image">
-                <img className="card_img" alt="" src={china} />
-                <span className="card-title">Hong Kong - China</span>
-              </div>
-              <div className="card-content">
-                <p>● Curso de inglês</p>
-                <p>● Acomodação em casa de familia</p>
-                <p>● Duração de 12 meses</p>
-                <p>●Taxas inclusas</p>
-              </div>
-              <div className="card-action">
-                <a href="/">
-                  Entrada +
-                  <br />
-                  12x de R$506,90
-                </a>
-                <a href="/" style={{ position: 'absolute', marginTop: '-28px' }} className="waves-effect waves-light btn-large right">Eu Quero</a>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ marginLeft: '25px', marginRight: '25px' }} className="tamanho_card fl">
-            <div className="card">
-              <div className="card-image">
-                <img className="card_img" alt="" src={china} />
-                <span className="card-title">Hong Kong - China</span>
-              </div>
-              <div className="card-content">
-                <p>● Curso de inglês</p>
-                <p>● Acomodação em casa de familia</p>
-                <p>●Duração de 12 meses</p>
-                <p>●Taxas inclusas</p>
-              </div>
-              <div className="card-action">
-                <a href="/">
-                  Entrada +
-                  <br />
-                  12x de R$506,90
-                </a>
-                <a href="/" style={{ position: 'absolute', marginTop: '-28px' }} className="waves-effect waves-light btn-large right">Eu Quero</a>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ marginLeft: '25px', marginRight: '25px' }} className="tamanho_card fl">
-            <div className="card">
-              <div className="card-image">
-                <img alt="" className="card_img" src={china} />
-                <span className="card-title">Hong Kong - China</span>
-              </div>
-              <div className="card-content">
-                <p>● Curso de inglês</p>
-                <p>● Acomodação em casa de familia</p>
-                <p>● Duração de 12 meses</p>
-                <p>● Taxas inclusas</p>
-              </div>
-              <div className="card-action">
-                <a href="/">
-                  Entrada +
-                  <br />
-                  12x de R$506,90
-                </a>
-                <a href="/" style={{ position: 'absolute', marginTop: '-28px' }} className="waves-effect waves-light btn-large right">Eu Quero</a>
-              </div>
-            </div>
-          </div>
-
-          <div style={{ marginLeft: '25px', marginRight: '25px' }} className="tamanho_card fl">
-            <div className="card">
-              <div className="card-image">
-                <img alt="" className="card_img" src={china} />
-                <span className="card-title">Hong Kong - China</span>
-              </div>
-              <div className="card-content">
-                <p>● Curso de inglês</p>
-                <p>● Acomodação em casa de familia</p>
-                <p>● Duração de 12 meses</p>
-                <p>● Taxas inclusas</p>
-              </div>
-              <div className="card-action">
-                <a href="/">
-                  Entrada +
-                  <br />
-                  12x de R$506,90
-                </a>
-                <a href="/" style={{ position: 'absolute', marginTop: '-28px' }} className="waves-effect waves-light btn-large right">Eu Quero</a>
-              </div>
-            </div>
-          </div>
+        <div id="ranking">
+          {
+            loading ? (
+              <BounceLoader
+                color="#673ab7"
+                sizeUnit="px"
+                size="100"
+              />
+            ) : (
+              ranking.map((ranked) => (
+                <div key={ranked.exchangeId} style={{ marginLeft: '25px', marginRight: '25px' }} className="tamanho_card">
+                  <div className="card">
+                    <div className="card-image">
+                      <img className="card_img" alt={ranked.exchanges.name} src={`http://localhost:3333/files/${ranked.exchanges.filename}`} />
+                    </div>
+                    <div className="card-content" style={{ padding: 0 }}>
+                      <h5 style={{ marginTop: 0 }}>{ranked.exchanges.name}</h5>
+                      <ul className="attributes">
+                        <li>{`Tipo de intercâmbio: ${ranked.exchanges.exchangeType.name}`}</li>
+                        <li>{`Duração: ${ranked.exchanges.time} meses`}</li>
+                        <li>{`País: ${ranked.exchanges.city.country.name}`}</li>
+                        <li>{`Cidade: ${ranked.exchanges.city.name}`}</li>
+                      </ul>
+                      <Link to={`/exchanges/${ranked.exchangeId}/dashboard`} className="redirect">EU QUERO</Link>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )
+          }
         </div>
       </div>
 
-      <div className="limpar" />
-
       <div>
-        <p className="font">Viva um intercâmbio</p>
+        <h5 className="title center" style={{ fontSize: '22px' }}>Viva um intercâmbio</h5>
       </div>
-
-      <div className="limpar" />
 
       <div className="principal_div_filter">
         <div className="sub_filter">
@@ -132,19 +80,24 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter a" style={{ backgroundImage: `url(${require('../../assets/thumbnails/1.jpg')})` }}>
-                  <p>Férias Teen</p>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/1.jpg')})` }}>
+                  <p>Estudo de Idiomas</p>
                 </div>
                 <div className="back">
                   <div className="p_div_center">
                     <p className="font_div_back_text">
-                      <b className="font_div_back_titulo">Férias Teen</b>
+                      <b className="font_div_back_titulo">Estudo de Idiomas</b>
                       <br />
-                      O Intercâmbio de Férias Teen combina aprendizado a diversão, fazendo com que o participante tenha uma experiência única durante as férias.
+                      Essa modalidade de intercâmbio tem como
+                      objetivo o aprendizado de uma nova língua.
+                      Tanto pode ser feia por pessoas que têm um
+                      nível inicial na língua estrangeira quanto por
+                      pessoas que já possuem um nível mais avançados
+                      e desejam evoluir ainda mais.
                     </p>
                   </div>
                   <div className="flex botao">
-                    <a href="/" className="waves-effect waves-light btn">Eu quero</a>
+                    <Link to="/search?exchangeType=1" className="waves-effect waves-light btn">Eu quero</Link>
                   </div>
                 </div>
               </div>
@@ -156,69 +109,26 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter a2" style={{ backgroundImage: `url(${require('../../assets/thumbnails/2.jpg')})` }}>
-                  <p>Curso de idiomas</p>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/2.jpg')})` }}>
+                  <p>Au Pair</p>
                 </div>
                 <div className="back">
                   <div className="p_div_center">
                     <p className="font_div_back_text">
-                      <b className="font_div_back_titulo">Curso de idioma</b>
+                      <b className="font_div_back_titulo">Au Pair</b>
                       <br />
-                      Os cursos regulares são os programas voltados para a aprendizagem ou aperfeiçoamento do idioma, tendo cargas horárias que variam de acordo com a empresa.
+                      Cuidar de crianças, ser pago por isso e se
+                      manter nos Estados Unidos com o que recebe da
+                      família contratante é o objetivo de quem deseja
+                      fazer intercâmbio do tipo Au Pair. Com esse tipo
+                      de programa é possível passar cerca de uma ano
+                      nos Estados Unidos. Além da remuneração, a
+                      família contratante ainda paga um curso para a
+                      babá.
                     </p>
                   </div>
                   <div className="flex botao">
-                    <a href="/" className="waves-effect waves-light btn">Eu quero</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="sub_filter">
-          <div className="filter">
-            <div
-              className="flip-container"
-            >
-              <div className="flipper">
-                <div className="front p_div_filter a3" style={{ backgroundImage: `url(${require('../../assets/thumbnails/3.jpg')})` }}>
-                  <p>Estudo e Trabalho</p>
-                </div>
-                <div className="back">
-                  <div className="p_div_center">
-                    <p className="font_div_back_text">
-                      <b className="font_div_back_titulo">Estudo e trabalho</b>
-                      <br />
-                      Intercâmbio que combina curso de inglês com a possibilidade de emprego remunerado no exterior. Oportunidade ideal para quem quer aperfeiçoar o idioma, ter a chance de morar em outro país e conseguir recuperar parte do investimento trabalhando.
-                    </p>
-                  </div>
-                  <div className="flex botao">
-                    <a href="/" className="waves-effect waves-light btn">Eu quero</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="filter">
-            <div
-              className="flip-container"
-            >
-              <div className="flipper">
-                <div className="front p_div_filter a4" style={{ backgroundImage: `url(${require('../../assets/thumbnails/4.jpg')})` }}>
-                  <p>Word Experience</p>
-                </div>
-                <div className="back">
-                  <div className="p_div_center">
-                    <p className="font_div_back_text">
-                      <b className="font_div_back_titulo">Work Experience</b>
-                      <br />
-                      Programa exclusivo para estudantes universitários que querem embarcar em um intercâmbio de trabalho durante as férias de final de ano, entre dezembro e março.
-                    </p>
-                  </div>
-                  <div className="flex botao">
-                    <a href="/" className="waves-effect waves-light btn">Eu quero</a>
+                    <Link to="/search?exchangeType=2" clLinkssName="waves-effect waves-light btn">Eu quero</Link>
                   </div>
                 </div>
               </div>
@@ -232,19 +142,21 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter a5" style={{ backgroundImage: `url(${require('../../assets/thumbnails/5.jpg')})` }}>
-                  <p>Aupair</p>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/3.jpg')})` }}>
+                  <p>Graduação</p>
                 </div>
                 <div className="back">
                   <div className="p_div_center">
                     <p className="font_div_back_text">
-                      <b className="font_div_back_titulo">Aupair</b>
+                      <b className="font_div_back_titulo">Graduação</b>
                       <br />
-                      O Au Pair é oferecido apenas mulheres, ideal para quem quer vivenciar o cotidiano de uma família estrangeira. A participante vai ter uma experiência de imersão nos hábitos e modo de vida local com remuneração a partir de $ 195,75 por semana.
+                      O estudante pode tanto cursar a graduação
+                      inteira em instituições estrangeiras quanto
+                      um semestre ou período específico.
                     </p>
                   </div>
                   <div className="flex botao">
-                    <a href="/" className="waves-effect waves-light btn">Eu quero</a>
+                    <Link to="/search?exchangeType=3" className="waves-effect waves-light btn">Eu quero</Link>
                   </div>
                 </div>
               </div>
@@ -256,19 +168,85 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter a6" style={{ backgroundImage: `url(${require('../../assets/thumbnails/6.jpg')})` }}>
-                  <p>Universidade</p>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/4.jpg')})` }}>
+                  <p>Especialização profissional</p>
                 </div>
                 <div className="back">
                   <div className="p_div_center">
                     <p className="font_div_back_text">
-                      <b className="font_div_back_titulo">Universidade</b>
+                      <b className="font_div_back_titulo">Especialização profissional</b>
                       <br />
-                      Programa exclusivo para estudantes universitários que querem embarcar em um intercâmbio de trabalho durante as férias de final de ano, entre dezembro e março.
+                      É possível fazer uma especialização
+                      profissional fora do país, como um mestrado,
+                      doutorado ou algum curso que ofereça capacitação
+                      específica para um aspecto da área de conhecimento
+                      estudada.
                     </p>
                   </div>
                   <div className="flex botao">
-                    <a href="/" className="waves-effect waves-light btn">Eu quero</a>
+                    <Link to="/search?exchangeType=4" className="waves-effect waves-light btn">Eu quero</Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="sub_filter">
+          <div className="filter">
+            <div
+              className="flip-container"
+            >
+              <div className="flipper">
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/5.jpg')})` }}>
+                  <p>Work and Travel</p>
+                </div>
+                <div className="back">
+                  <div className="p_div_center">
+                    <p className="font_div_back_text">
+                      <b className="font_div_back_titulo">Work and Travel</b>
+                      <br />
+                      Estudar e trabalhar também é um dos tipos de
+                      intercâmbio possíveis. Nesse caso, não necessariamente
+                      a viagem estará vinculada à uma instituição de ensino.
+                      A pessoa irá para outro país através de programas de
+                      trabalho que trarão mais experiência para o currículo,
+                      aprendizado da língua estrangeira e nova vivências interpessoais.
+                    </p>
+                  </div>
+                  <div className="flex botao">
+                    <Link href="/search?exchangeType=5" className="waves-effect waves-light btn">Eu quero</Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="filter">
+            <div
+              className="flip-container"
+            >
+              <div className="flipper">
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/6.jpg')})` }}>
+                  <p>Voluntariado</p>
+                </div>
+                <div className="back">
+                  <div className="p_div_center">
+                    <p className="font_div_back_text">
+                      <b className="font_div_back_titulo">Voluntariado</b>
+                      <br />
+                      O voluntariado é considerado uma das formas mais
+                      generosas de intercâmbio. Nessa modalidade a pessoa
+                      viajar para trabalhar voluntariamente em uma ONG ou
+                      outro tipo de organização que realiza trabalhos
+                      sociais. A partir das vivências vem o aprendizado,
+                      assim como no Work and travel, a melhora nas
+                      habilidades de fala e compreensão da língua é
+                      desenvolvida através do contato com outras pessoas.
+                    </p>
+                  </div>
+                  <div className="flex botao">
+                    <Link to="/search?exchangeType=6" className="waves-effect waves-light btn">Eu quero</Link>
                   </div>
                 </div>
               </div>

@@ -15,6 +15,7 @@ import Chat from './pages/Chat';
 import NewRate from './pages/NewRate';
 import AgencyDashboard from './pages/AgencyDashboard';
 import ExchangeDashboard from './pages/ExchangeDashboard';
+import SendEmail from './pages/SendEmail';
 
 const HeaderWrapper = withRouter(Header);
 
@@ -41,9 +42,10 @@ const Routes = () => (
       <Route path="/search" component={Search} />
       <PrivateRoute path="/exchanges/new" component={NewExchange} />
       <PrivateRoute path="/chats/:id" component={Chat} />
-      <PrivateRoute path="/rates/new" component={NewRate} />
+      <PrivateRoute path="/rates/:id" component={NewRate} />
       <Route path="/agencies/:id/dashboard" component={AgencyDashboard} />
       <Route path="/exchanges/:id/dashboard" component={ExchangeDashboard} />
+      <Route path="/auth/send_email" component={SendEmail} />
     </Switch>
   </BrowserRouter>
 );

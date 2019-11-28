@@ -1,9 +1,3 @@
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .filter {
   margin: 40px;
   float: left;
@@ -22,6 +16,7 @@
   color: #311b92;
   text-align: center;
 }
+
 .text {
   width: 100%;
 }
@@ -54,21 +49,15 @@
   width: 100%;
 }
 
-.fl {
-  float: left;
-}
-
 .flex {
   display: flex;
   justify-content: center;
 }
 
-/* O container geral define a perspectiva */
 .flip-container {
   perspective: 1000;
 }  	
 
-/* vira os containers frente e verso quando o mouse passa em cima */
 .flip-container:hover .flipper, .flip-container.hover .flipper {  		
   transform: rotateY(180deg);
 }    
@@ -79,27 +68,23 @@
   border-radius: 9px;
 }
 
-/* define a velocidade da transição */
 .flipper {  	
   transition: 0.6s;  	
   transform-style: preserve-3d;    	
   position: relative;
 }
-    
-/* esconde o verso durante a animação */
+
 .front, .back {  	
   backface-visibility: hidden;    	
   position: absolute;  	
   top: 0;  	
   left: 0;
 }
-    
-/* frente posicionada sobre o verso */
+
 .front {
   z-index: 2;
 }    
 
-/* verso inicialmente escondido */
 .back {
   transform: rotateY(180deg);
   background-color: #f5f5f5;
@@ -140,21 +125,4 @@
 
 .font_filter {
   font-family: 'Nunito', sans-serif;
-}
-
-/* MEDIA QUERY */
-
-/* CELULAR DE PÉ */
-@media screen and (max-width: 450px) 
-{
-}
-
-/* CELULAR DEITADO */
-@media screen and (min-width: 451px) and (max-width: 650px) 
-{
-}
-
-/* TABLET DE PÉ */
-@media screen and (min-width: 651px) and (max-width: 960px) 
-{
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
+import queryString from 'query-string';
 import { BounceLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import M from 'materialize-css';
@@ -21,7 +22,7 @@ const orders = [
   },
 ];
 
-function Search() {
+function Search({ location }) {
   const [exchanges, setExchanges] = useState([]);
   const [exchangeTypes, setExchangeTypes] = useState([]);
   const [housingTypes, setHousingTypes] = useState([]);
@@ -31,7 +32,7 @@ function Search() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
-  const [selectedExchangeType, setSelectedExchangeType] = useState(null);
+  const [selectedExchangeTypes, setSelectedExchangeTypes] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
   const [selectedHousingTypes, setSelectedHousingTypes] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(orders[0].value);
@@ -42,8 +43,8 @@ function Search() {
       params: {
         page,
         languages: selectedLanguages.join(','),
-        exchangeTypes: selectedExchangeType,
-        city: selectedCities.join(','),
+        exchangeTypes: selectedExchangeTypes.join(','),
+        cities: selectedCities.join(','),
         housingTypes: selectedHousingTypes.join(','),
         order: selectedOrder,
       },
@@ -99,13 +100,17 @@ function Search() {
     loadHousingTypes();
     loadLanguages();
     loadCountries();
+
+    const { exchangeType } = queryString.parse(location.search);
+
+    setSelectedExchangeTypes([...selectedExchangeTypes, exchangeType]);
   }, []);
 
   useEffect(() => {
     loadExchanges();
   }, [
     selectedLanguages,
-    selectedExchangeType,
+    selectedExchangeTypes,
     selectedCities,
     selectedHousingTypes,
     selectedOrder,
@@ -167,7 +172,7 @@ function Search() {
               name="exchangeType"
               isLoading={!exchangeTypes}
               options={exchangeTypes}
-              onChange={({ value }) => setSelectedExchangeType(value)}
+              onChange={(event) => setSelectedExchangeTypes(event.map(({ value }) => value))}
             />
             <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Idioma(s)</p>
             <Select
@@ -221,17 +226,8 @@ function Search() {
                       >
                         <p style={{ fontFamily: "'Noto Sans KR', sansSerif", fontSize: '20px' }}>{exchange.name}</p>
                         <p style={{ fontSize: '18px', marginTop: '13px' }}>{exchange.description}</p>
-                        <a href="/" className="waves-effect waves-light btn right">EU QUERO</a>
                         <div className="card-action">
-                          <a
-                            href="/"
-                            style={{
-                              textAlign: 'left', marginLeft: '5px',
-                            }}
-                            className="left"
-                          >
                             {exchange.price}
-                          </a>
                         </div>
                       </div>
                     </div>
