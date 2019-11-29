@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BounceLoader } from 'react-spinners';
 import M from 'materialize-css';
+import Exchange from '../../components/Exchange';
 import api from '../../services/api';
 import './styles.css';
 import paris from '../../assets/paris.jpg';
@@ -13,9 +14,8 @@ function Main() {
   const loadRanking = async () => {
     setLoading(true);
     const { data } = await api.get('/ranking?limit=3');
-    setLoading(false);
-
     setRanking(data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -45,24 +45,16 @@ function Main() {
                 size="100"
               />
             ) : (
-              ranking.map((ranked) => (
-                <div key={ranked.exchangeId} style={{ marginLeft: '25px', marginRight: '25px' }} className="tamanho_card">
-                  <div className="card">
-                    <div className="card-image">
-                      <img className="card_img" alt={ranked.exchanges.name} src={`http://localhost:3333/files/${ranked.exchanges.filename}`} />
-                    </div>
-                    <div className="card-content" style={{ padding: 0 }}>
-                      <h5 style={{ marginTop: 0 }}>{ranked.exchanges.name}</h5>
-                      <ul className="attributes">
-                        <li>{`Tipo de intercâmbio: ${ranked.exchanges.exchangeType.name}`}</li>
-                        <li>{`Duração: ${ranked.exchanges.time} meses`}</li>
-                        <li>{`País: ${ranked.exchanges.city.country.name}`}</li>
-                        <li>{`Cidade: ${ranked.exchanges.city.name}`}</li>
-                      </ul>
-                      <Link to={`/exchanges/${ranked.exchangeId}/dashboard`} className="redirect">EU QUERO</Link>
-                    </div>
-                  </div>
-                </div>
+              ranking.map(({ exchangeId, exchanges }) => (
+                <Exchange
+                  key={exchangeId}
+                  id={exchangeId}
+                  name={exchanges.name}
+                  filename={exchanges.filename}
+                  exchangeType={exchanges.exchangeType.name}
+                  country={exchanges.city.country.name}
+                  city={exchanges.city.name}
+                />
               ))
             )
           }

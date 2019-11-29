@@ -16,6 +16,7 @@ import NewRate from './pages/NewRate';
 import AgencyDashboard from './pages/AgencyDashboard';
 import ExchangeDashboard from './pages/ExchangeDashboard';
 import SendEmail from './pages/SendEmail';
+import Agency from './pages/Agency';
 
 const HeaderWrapper = withRouter(Header);
 
@@ -26,7 +27,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       localStorage.getItem('token') ? (
         <Component {...props} />
       ) : (
-        <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+        <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
       ))}
   />
 );
@@ -44,8 +45,9 @@ const Routes = () => (
       <PrivateRoute path="/chats/:id" component={Chat} />
       <PrivateRoute path="/rates/:id" component={NewRate} />
       <Route path="/agencies/:id/dashboard" component={AgencyDashboard} />
-      <Route path="/exchanges/:id/dashboard" component={ExchangeDashboard} />
+      <PrivateRoute path="/exchanges/:id/dashboard" component={ExchangeDashboard} />
       <Route path="/auth/send_email" component={SendEmail} />
+      <Route path="/agencies/:id" component={Agency} />
     </Switch>
   </BrowserRouter>
 );

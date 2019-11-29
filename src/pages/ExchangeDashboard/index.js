@@ -177,6 +177,7 @@ Detalhes
                     <StarRatings
                       rating={rate.avg}
                       starRatedColor="yellow"
+                      starDimension="30px"
                       numberOfStars={5}
                     />
                   </div>
