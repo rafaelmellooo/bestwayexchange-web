@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BounceLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 import M from 'materialize-css';
@@ -19,7 +20,11 @@ const schema = Yup.object().shape({
 });
 
 function Login({ history, location }) {
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async ({ email, password }) => {
+    setLoading(true);
+
     try {
       const { data: { token } } = await api.post('/auth/authenticate', { email, password });
 
@@ -40,6 +45,8 @@ function Login({ history, location }) {
 
       mistakes[err.response.status]();
     }
+
+    setLoading(false);
   };
 
   const authenticate = async () => {
@@ -74,12 +81,22 @@ function Login({ history, location }) {
               <Input label="Senha" type="password" name="password" />
             </div>
 
-            <div className="row espacamento">
-              <input type="submit" value="Logar" className="btn" style={{ backgroundColor: '#4527a0' }} />
-              <Link to="/register">
-                <p className="semConta">Não tem conta? Cadastre-se aqui!</p>
-              </Link>
-            </div>
+            {
+              loading ? (
+                <BounceLoader
+                  color="#673ab7"
+                  sizeUnit="px"
+                  size="100"
+                />
+              ) : (
+                <div className="row espacamento">
+                  <input type="submit" value="Logar" className="btn" style={{ backgroundColor: '#4527a0' }} />
+                  <Link to="/register">
+                    <p className="semConta">Não tem conta? Cadastre-se aqui!</p>
+                  </Link>
+                </div>
+              )
+            }
           </Form>
         </div>
       </div>

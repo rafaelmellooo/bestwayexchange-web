@@ -1,0 +1,27 @@
+.address {
+  border: thin solid #0d47a1;
+}
+
+.address > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.address > div > div {
+  padding: 10px;
+}
+
+.address > div > div p {
+  line-height: 24px;
+}
+
+.address h4 {
+  background-color: #0d47a1;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 0;
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+}

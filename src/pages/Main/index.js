@@ -51,9 +51,10 @@ function Main() {
                   id={exchangeId}
                   name={exchanges.name}
                   filename={exchanges.filename}
+                  time={exchanges.time}
                   exchangeType={exchanges.exchangeType.name}
                   country={exchanges.city.country.name}
-                  city={exchanges.city.name}
+                  city={exchanges.city.name}  
                 />
               ))
             )

@@ -1,0 +1,51 @@
+article#employees {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+div.employee {
+  border: thin solid #4527a0;
+}
+
+div.employee div.top img {
+  margin-right: 10px;
+  border-radius: 50%;
+  border: thick solid #fff;
+  height: 100px;
+  width: 100px;
+}
+
+div.employee div.top h5 {
+  background-color: initial;
+  font-size: 20px;
+  width: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+div.employee div.top {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #4527a0;
+  padding: 10px;
+}
+
+div.employee p {
+  padding: 10px;
+  line-height: 24px;
+}
+
+article a#add {
+  background-color: #4527a0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+article a#add:hover {
+  cursor: pointer;
+  background-color: #4c21cf;
+}

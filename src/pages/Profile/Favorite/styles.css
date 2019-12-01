@@ -1,0 +1,17 @@
+article#exchanges {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+article a#add {
+  background-color: #4527a0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+article a#add:hover {
+  cursor: pointer;
+  background-color: #4c21cf;
+}

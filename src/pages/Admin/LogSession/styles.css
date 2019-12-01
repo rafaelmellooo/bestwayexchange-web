@@ -1,0 +1,9 @@
+.log {
+  display: flex;
+  flex-direction: column;
+}
+
+.log h5 {
+  background-color: initial;
+  color: initial;
+}

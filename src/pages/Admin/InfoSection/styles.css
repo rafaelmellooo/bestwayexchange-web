@@ -1,0 +1,55 @@
+article div#info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+article div#info img {
+  height: 100px;
+  width: 100px;
+  border: thick solid #4527a0;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+article img#background {
+  height: 300px;
+  width: 100%;
+}
+
+article form button {
+  background-color: #0097a7;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  border: initial;
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+article form button:hover {
+  background-color: #0bb6c9;
+  cursor: pointer;
+}
+
+article#addresses {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  justify-items: initial;
+}
+
+article div#add {
+  background-color: #4527a0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+article div#add:hover {
+  cursor: pointer;
+  background-color: #4c21cf;
+}

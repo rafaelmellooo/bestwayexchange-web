@@ -16,6 +16,9 @@ export default function Header({ history }) {
         .then(({ data }) => setDashboard(data))
         .catch(() => {
           localStorage.removeItem('token');
+          localStorage.removeItem('id');
+          localStorage.removeItem('type');
+          localStorage.removeItem('agency');
           history.push('/login');
         });
     }
