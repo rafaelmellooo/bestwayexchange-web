@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import queryString from 'query-string';
 import { BounceLoader } from 'react-spinners';
-import { Link } from 'react-router-dom';
-import M from 'materialize-css';
+import Exchange from '../../components/Exchange';
 import api from '../../services/api';
 import './styles.css';
 
@@ -92,9 +91,6 @@ function Search({ location }) {
   };
 
   useEffect(() => {
-    // Auto initialize all the things!
-    M.AutoInit();
-
     loadExchanges();
     loadExchangeTypes();
     loadHousingTypes();
@@ -118,139 +114,151 @@ function Search({ location }) {
   ]);
 
   return (
-    <>
-      <div style={{
-        display: 'flex', justifyContent: 'center', backgroundColor: '#eeeeee', width: '100%',
-      }}
-      >
-        <div style={{
-          backgroundColor: '#eeeeee', width: '90%', paddingTop: '55px',
+    <div>
+      <h5
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
         }}
-        >
-          <div
-            className="font_filters"
-            style={{
-              height: '100%', backgroundColor: '#eeeeee', width: '20%', float: 'left', paddingLeft: '2%',
-            }}
-          >
-            <div style={{ padding: '1%' }}>
-              <h5 style={{ height: 'auto' }}>
-                Filtrar Resultados
-                <i className="material-icons">filter_list</i>
-              </h5>
-            </div>
-            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Ordenar por</p>
-            <Select
-              isSearchable
-              name="order"
-              defaultValue={orders[0]}
-              options={orders}
-              onChange={({ value }) => setSelectedOrder(value)}
-            />
-            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>País</p>
-            <Select
-              isSearchable
-              name="country"
-              isLoading={!countries}
-              options={countries}
-              onChange={({ value }) => loadCities(value)}
-            />
-            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Cidade(s)</p>
-            <Select
-              isSearchable
-              name="cities"
-              isClearable
-              isMulti
-              isLoading={!cities}
-              options={cities}
-              onChange={(event) => setSelectedCities(event.map(({ value }) => value))}
-            />
-            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Tipo de Intercâmbio</p>
-            <Select
-              isSearchable
-              isClearable
-              name="exchangeType"
-              isLoading={!exchangeTypes}
-              options={exchangeTypes}
-              onChange={(event) => setSelectedExchangeTypes(event.map(({ value }) => value))}
-            />
-            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Idioma(s)</p>
-            <Select
-              isSearchable
-              isClearable
-              isMulti
-              name="languages"
-              isLoading={!languages}
-              options={languages}
-              onChange={(event) => setSelectedLanguages(event.map(({ value }) => value))}
-            />
-            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Tipos de Moradia</p>
-            <Select
-              isSearchable
-              isClearable
-              isMulti
-              name="housingTypes"
-              isLoading={!housingTypes}
-              options={housingTypes}
-              onChange={(event) => setSelectedHousingTypes(event.map(({ value }) => value))}
-            />
-          </div>
+      >
+        Filtrar Resultados
+        <i style={{ marginLeft: '10px' }} className="small material-icons">filter_list</i>
+      </h5>
 
-          {
-            loading ? (
-              <BounceLoader
-                color="#673ab7"
-                sizeUnit="px"
-                size="100"
-                css={{ marginLeft: '750px' }}
-              />
-            ) : exchanges.map((exchange) => (
-              <Link to={`/exchanges/${exchange.id}/dashboard`} key={exchange.id} className="intercambios_bigdiv" style={{ marginTop: '20px' }}>
-                <div style={{ borderRadius: '7px' }} className="intercambios">
-                  <div style={{ width: '100%', height: '100%' }}>
-                    <div style={{
-                      width: '47%', height: '100%', float: 'left', padding: 0,
-                    }}
-                    >
-                      <figure style={{ margin: 0, marginLeft: 0 }}>
-                        <img src={exchange.filename ? `http://localhost:3333/files/${exchange.filename}` : ''} alt={exchange.name} style={{ width: '95%', marginTop: '12px' }} />
-                      </figure>
-                    </div>
-                    <div style={{
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', width: '50%', height: '100%',
-                    }}
-                    >
-                      <div style={{
-                        width: '100%', height: '100%', float: 'left', textAlign: 'center',
-                      }}
-                      >
-                        <p style={{ fontFamily: "'Noto Sans KR', sansSerif", fontSize: '20px' }}>{exchange.name}</p>
-                        <p style={{ fontSize: '18px', marginTop: '13px' }}>{exchange.description}</p>
-                        <div className="card-action">
-                            {exchange.price}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))
-          }
-          <div style={{
-            marginTop: '10px',
-            marginBottom: '10px',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-          >
-            <button onClick={prevPage} className="btn" type="button">Anterior</button>
-            <button onClick={nextPage} style={{ marginLeft: '10px' }} className="btn" type="button">Próximo</button>
-          </div>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gridGap: '20px',
+          padding: '20px',
+        }}
+      >
+        <div>
+          <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Ordenar por</p>
+          <Select
+            isSearchable
+            name="order"
+            defaultValue={orders[0]}
+            options={orders}
+            onChange={({ value }) => setSelectedOrder(value)}
+          />
+        </div>
+
+        <div>
+          <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>País</p>
+          <Select
+            isSearchable
+            name="country"
+            isLoading={!countries}
+            options={countries}
+            onChange={({ value }) => loadCities(value)}
+          />
+        </div>
+
+        <div>
+          <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Cidade(s)</p>
+          <Select
+            isSearchable
+            name="cities"
+            isClearable
+            isMulti
+            isLoading={!cities}
+            options={cities}
+            onChange={(event) => setSelectedCities(event.map(({ value }) => value))}
+          />
+        </div>
+
+        <div>
+          <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Tipo de Intercâmbio</p>
+          <Select
+            isSearchable
+            isClearable
+            name="exchangeType"
+            isLoading={!exchangeTypes}
+            options={exchangeTypes}
+            onChange={(event) => setSelectedExchangeTypes(event.map(({ value }) => value))}
+          />
+        </div>
+
+        <div>
+          <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Idioma(s)</p>
+          <Select
+            isSearchable
+            isClearable
+            isMulti
+            name="languages"
+            isLoading={!languages}
+            options={languages}
+            onChange={(event) => setSelectedLanguages(event.map(({ value }) => value))}
+          />
+        </div>
+
+        <div>
+          <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Tipos de Moradia</p>
+          <Select
+            isSearchable
+            isClearable
+            isMulti
+            name="housingTypes"
+            isLoading={!housingTypes}
+            options={housingTypes}
+            onChange={(event) => setSelectedHousingTypes(event.map(({ value }) => value))}
+          />
         </div>
       </div>
 
+      <h5
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+        }}
+      >
+        Resultados
+      </h5>
+      {
+        loading ? (
+          <BounceLoader
+            color="#673ab7"
+            sizeUnit="px"
+            size="100"
+            loading={loading}
+            css={{ marginLeft: '10px', alignSelf: 'center' }}
+          />
+        ) : (
+          <article id="exchanges">
+            {
+              exchanges.map((exchange) => (
+                <Exchange
+                  key={exchange.id}
+                  id={exchange.id}
+                  name={exchange.name}
+                  time={exchange.time}
+                  exchangeType={exchange.exchangeType.name}
+                  filename={exchange.filename}
+                  city={exchange.city.name}
+                  country={exchange.city.country.name}
+                  price={exchange.price}
+                  createdAt={exchange.createdAt}
+                />
+              ))
+            }
+          </article>
+        )
+      }
 
-    </>
+      <article
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <button style={{ backgroundColor: '#fc4503' }} onClick={prevPage} className="btn" type="button">Anterior</button>
+        <button style={{ backgroundColor: '#18a81a' }} onClick={nextPage} className="btn" type="button">Próximo</button>
+      </article>
+    </div>
   );
 }
 

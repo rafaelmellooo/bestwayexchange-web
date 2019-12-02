@@ -5,7 +5,13 @@ import M from 'materialize-css';
 import Exchange from '../../components/Exchange';
 import api from '../../services/api';
 import './styles.css';
-import paris from '../../assets/paris.jpg';
+import main from '../../assets/main.jpg';
+import languageStudy from '../../assets/language_study.jpg';
+import auPair from '../../assets/au_pair.jpg';
+import graduation from '../../assets/graduation.jpg';
+import professionalSpecialization from '../../assets/professional_specialization.jpg';
+import workAndTravel from '../../assets/work_and_travel.jpg';
+import volunteering from '../../assets/volunteering.jpg';
 
 function Main() {
   const [loading, setLoading] = useState(true);
@@ -28,11 +34,11 @@ function Main() {
   return (
     <>
       <div className="parallax-container">
-        <div className="parallax"><img src={paris} alt="" width="50%;" /></div>
+        <div className="parallax"><img src={main} alt={main.filename} width="50%;" /></div>
       </div>
 
       <div>
-        <h5 className="title center" style={{ fontSize: '22px', marginTop: 0 }}>Ranking</h5>
+        <h5 className="title center" style={{ fontSize: '22px', marginTop: 0 }}>TOP 3</h5>
       </div>
 
       <div className="flex" style={{ display: 'flex', justifyContent: 'center' }}>
@@ -54,7 +60,9 @@ function Main() {
                   time={exchanges.time}
                   exchangeType={exchanges.exchangeType.name}
                   country={exchanges.city.country.name}
-                  city={exchanges.city.name}  
+                  city={exchanges.city.name}
+                  price={exchanges.price}
+                  createdAt={exchanges.createdAt}
                 />
               ))
             )
@@ -73,7 +81,7 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/1.jpg')})` }}>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${languageStudy})` }}>
                   <p>Estudo de Idiomas</p>
                 </div>
                 <div className="back">
@@ -102,7 +110,7 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/2.jpg')})` }}>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${auPair})` }}>
                   <p>Au Pair</p>
                 </div>
                 <div className="back">
@@ -135,7 +143,7 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/3.jpg')})` }}>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${graduation})` }}>
                   <p>Graduação</p>
                 </div>
                 <div className="back">
@@ -161,7 +169,7 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/4.jpg')})` }}>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${professionalSpecialization})` }}>
                   <p>Especialização profissional</p>
                 </div>
                 <div className="back">
@@ -191,7 +199,7 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/5.jpg')})` }}>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${workAndTravel})` }}>
                   <p>Work and Travel</p>
                 </div>
                 <div className="back">
@@ -220,7 +228,7 @@ function Main() {
               className="flip-container"
             >
               <div className="flipper">
-                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${require('../../assets/thumbnails/6.jpg')})` }}>
+                <div className="front p_div_filter exchange" style={{ backgroundImage: `url(${volunteering})` }}>
                   <p>Voluntariado</p>
                 </div>
                 <div className="back">

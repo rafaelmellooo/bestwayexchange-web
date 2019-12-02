@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Form, Input } from '@rocketseat/unform';
+import { BounceLoader } from 'react-spinners';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import Select from 'react-select';
@@ -25,6 +26,7 @@ const schema = Yup.object().shape({
 function Register({ history }) {
   const [thumbnail, setThumbnail] = useState(null);
   const [type, setType] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null), [thumbnail]);
 
@@ -40,12 +42,27 @@ function Register({ history }) {
     data.append('type', type);
 
     try {
+      setLoading(true);
       await api.post('/auth/register', data);
 
-      history.push('/auth/send_email');
+      toast.success('Usuário registrado com sucesso');
     } catch (err) {
       toast.error(err.response.data.errors[0].message);
+      return;
     }
+
+    try {
+      await api.post('/auth/send_email', { email });
+
+      toast.success(`E-mail de confirmação enviado para ${email}`);
+
+      history.push('/');
+    } catch (err) {
+      global.console.log(err.response);
+      toast.error(err.response.data.error);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -100,13 +117,25 @@ function Register({ history }) {
             </label>
           </div>
           <div className="row">
-            <div className="col s12">
-              <input
-                type="submit"
-                value="Cadastrar-se"
-                className="btn deep-purple darken-2"
-                style={{ marginLeft: '595px', marginTop: '-5px' }}
-              />
+            <div>
+              {
+                loading ? (
+                  <BounceLoader
+                    color="#673ab7"
+                    sizeUnit="px"
+                    size="100"
+                    loading={loading}
+                    css={{ marginLeft: '10px', alignSelf: 'center' }}
+                  />
+                ) : (
+                  <input
+                    type="submit"
+                    value="Cadastrar-se"
+                    className="btn deep-purple darken-2"
+                    style={{ marginLeft: '595px', marginTop: '-5px' }}
+                  />
+                )
+              }
             </div>
           </div>
         </Form>

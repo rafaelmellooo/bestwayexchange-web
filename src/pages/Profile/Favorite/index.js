@@ -39,6 +39,8 @@ function Favorite() {
             filename={exchange.filename}
             city={exchange.city.name}
             country={exchange.city.country.name}
+            price={exchange.price}
+            createdAt={exchange.createdAt}
           />
         ))
       }
