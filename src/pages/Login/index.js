@@ -30,11 +30,17 @@ function Login({ history, location }) {
 
       localStorage.setItem('token', token);
 
-      const { data: { id } } = await api.get('/dashboard');
+      const { data: { id, type } } = await api.get('/dashboard');
 
       localStorage.setItem('id', id);
 
-      history.push('/');
+      setLoading(false);
+
+      if (type.id === 1) { history.goBack(); }
+
+      if (type.id === 2) { history.push('/admin'); }
+
+      if (type.id === 3) { history.push('/admin'); }
     } catch (err) {
       const mistakes = {
         400: () => toast.error(err.response.data.error),
@@ -44,20 +50,22 @@ function Login({ history, location }) {
       };
 
       mistakes[err.response.status]();
-    }
 
-    setLoading(false);
+      setLoading(true);
+    }
   };
 
   const authenticate = async () => {
     const { email, token } = queryString.parse(location.search);
 
-    try {
-      await api.post('/auth/confirm_email', { email, token });
+    if (token && email) {
+      try {
+        await api.post('/auth/confirm_email', { email, token });
 
-      toast.success('E-mail verificado com sucesso');
-    } catch (err) {
-      toast.warn(err.response.data.error);
+        toast.success('E-mail verificado com sucesso');
+      } catch (err) {
+        toast.warn(err.response.data.error);
+      }
     }
   };
 

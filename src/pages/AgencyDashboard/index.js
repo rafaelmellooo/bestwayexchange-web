@@ -75,9 +75,9 @@ function Agency({ match }) {
             <div key={rate.user.email}>
               <StarRatings
                 rating={rate.grade.id}
+                numberOfStars={5}
                 starRatedColor="yellow"
                 starDimension="30px"
-                numberOfStars={5}
               />
             </div>
           ))

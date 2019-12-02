@@ -10,26 +10,6 @@
   width: 100%;
 }
 
-.font {
-  font-family: 'Mitr', sans-serif;
-  font-size: 30px;
-  color: #311b92;
-  text-align: center;
-}
-
-.text {
-  width: 100%;
-}
-
-.limpar {
-  clear: both;
-}
-.img_div {
-  width: 484px; 
-  height: 260px;
-  border-radius: 9px;
-}
-
 .p_div_filter {
   display: flex;
   align-items: center;
@@ -108,19 +88,8 @@
   width: 100%;
 }
 
-.span_card {
-  width: 100%;
-  background-color: black;
-  height: 50px;
-  position: fixed;
-}
-
 .card_img {
   height: 180px;
-}
-
-.font_filter {
-  font-family: 'Nunito', sans-serif;
 }
 
 img {

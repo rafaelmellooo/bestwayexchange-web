@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import Select from 'react-select';
 import api from '../../services/api';
 
 import './styles.css';
@@ -23,6 +24,7 @@ const schema = Yup.object().shape({
 
 function Register({ history }) {
   const [thumbnail, setThumbnail] = useState(null);
+  const [type, setType] = useState(null);
 
   const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null), [thumbnail]);
 
@@ -35,28 +37,23 @@ function Register({ history }) {
     data.append('email', email);
     data.append('password', password);
     data.append('profile', thumbnail);
-    data.append('type', 1);
+    data.append('type', type);
 
     try {
       await api.post('/auth/register', data);
 
-      await api.post('/auth/send_email', { email });
-
-      toast.success(`Um e-mail foi enviado para ${email}`, {
-        onClose: () => history.push('/'),
-      });
+      history.push('/auth/send_email');
     } catch (err) {
       toast.error(err.response.data.errors[0].message);
     }
   };
 
   return (
-    <main>
+    <main style={{ padding: 0 }}>
       <div className="space" />
       <div id="mainContainer">
         <h5>Cadastro</h5>
         <Form schema={schema} onSubmit={handleSubmit} className="forms">
-          <br />
           <div className="row">
             <div className="col s8" style={{ paddingLeft: 0 }}>
               <Input label="Nome" name="name" />
@@ -70,6 +67,26 @@ function Register({ history }) {
           </div>
           <div className="row">
             <Input label="Senha" type="password" name="password" />
+          </div>
+          <div className="row">
+            <Select
+              name="type"
+              options={[
+                {
+                  value: 1,
+                  label: 'Intercambista',
+                },
+                {
+                  value: 2,
+                  label: 'Funcionário',
+                },
+                {
+                  value: 3,
+                  label: 'Administrador',
+                },
+              ]}
+              onChange={({ value }) => setType(value)}
+            />
           </div>
           <div className="row">
             <label

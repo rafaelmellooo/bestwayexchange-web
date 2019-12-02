@@ -12,7 +12,7 @@ import Main from './pages/Main';
 import Register from './pages/Register';
 import Search from './pages/Search';
 import Chat from './pages/Chat';
-import NewRate from './pages/NewRate';
+import UpdateRate from './pages/UpdateRate';
 import Admin from './pages/Admin';
 import ExchangeDashboard from './pages/ExchangeDashboard';
 import SendEmail from './pages/SendEmail';
@@ -44,7 +44,7 @@ const Routes = () => (
       <Route path="/search" component={Search} />
       <PrivateRoute path="/exchanges/new" component={NewExchange} />
       <PrivateRoute path="/chats/:id" component={Chat} />
-      <PrivateRoute path="/rates/:id" component={NewRate} />
+      <PrivateRoute path="/rates/:id" component={UpdateRate} />
       <PrivateRoute path="/admin" component={Admin} />
       <Route path="/exchanges/:id/dashboard" component={ExchangeDashboard} />
       <Route path="/auth/send_email" component={SendEmail} />

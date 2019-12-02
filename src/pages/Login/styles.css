@@ -55,40 +55,36 @@ h5 {
 
 @media screen and (max-width: 450px) {
   main {
-      padding-top: 100px;
+    padding-top: 100px;
   }
 
   .login {
-      width: 350px;
-      height: 360px;
+    width: 350px;
+    height: 360px;
   }
-
 }
 
 /* CELULAR DEITADO */
 
 @media screen and (min-width: 451px) and (max-width: 700px) {
   main {
-      padding-top: 100px;
+    padding-top: 100px;
   }
 
   .login {
-      width: 450px;
-      height: 360px;
+    width: 450px;
+    height: 360px;
   }
-
 }
 
 
 /* TABLET DE PÉ */
 @media screen and (min-width: 700px) and (max-width: 960px) {
   main {
-      padding-top: 100px;
+    padding-top: 100px;
   }
-
   .login {
-      width: 450px;
-      height: 350px;
+    width: 450px;
+    height: 350px;
   }
-
 }

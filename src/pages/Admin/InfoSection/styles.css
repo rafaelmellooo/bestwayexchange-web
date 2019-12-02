@@ -42,14 +42,14 @@ article#addresses {
   justify-items: initial;
 }
 
-article div#add {
+article button#add {
   background-color: #4527a0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-article div#add:hover {
+article button#add:hover {
   cursor: pointer;
   background-color: #4c21cf;
 }

@@ -15,7 +15,7 @@ const schema = Yup.object().shape({
     .required('A descrição deve ser informada'),
 });
 
-function NewAgency() {
+function NewAgency({ history }) {
   const [thumbnail, setThumbnail] = useState(null);
 
   const preview = useMemo(() => (thumbnail ? URL.createObjectURL(thumbnail) : null), [thumbnail]);
@@ -28,6 +28,8 @@ function NewAgency() {
 
     try {
       await api.post('/agencies', data);
+
+      history.push('/admin');
     } catch (err) {
       toast.error(err.response.data.errors[0].message);
     }

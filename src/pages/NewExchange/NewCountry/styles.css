@@ -1,0 +1,27 @@
+#countryInfo img {
+  display: block;
+}
+
+#countryInfo p, #countryInfo img, #countryInfo button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#countryInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+#countryInfo button {
+  border-radius: 4px;
+  border: initial;
+  background-color: rgb(10, 223, 39);
+  color: #fff;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px 20px;
+}
+
+#countryInfo button:hover {
+  cursor: pointer;
+}

@@ -121,7 +121,7 @@ function Main() {
                     </p>
                   </div>
                   <div className="flex botao">
-                    <Link to="/search?exchangeType=2" clLinkssName="waves-effect waves-light btn">Eu quero</Link>
+                    <Link to="/search?exchangeType=2" className="waves-effect waves-light btn">Eu quero</Link>
                   </div>
                 </div>
               </div>
@@ -208,7 +208,7 @@ function Main() {
                     </p>
                   </div>
                   <div className="flex botao">
-                    <Link href="/search?exchangeType=5" className="waves-effect waves-light btn">Eu quero</Link>
+                    <Link to="/search?exchangeType=5" className="waves-effect waves-light btn">Eu quero</Link>
                   </div>
                 </div>
               </div>

@@ -11,55 +11,20 @@ p {
   padding: 0;
 }
 
-main {
-  width: 100%;
-  background-color: white;
-}
-
-.innerContainer {
-  margin: auto;
-  height: 100%;
-  background-color: #ede7f6;
+div#main-chat {
+  height: calc(100vh - 80px);
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
 }
 
 .contact-list {
-  width: 25%;
-  height: 900px;
+  height: 100%;
   overflow-y: auto;
   scroll-behavior: smooth;
   background-color: #ede7f6 ;
   border-right: 3px solid white;
-}
-
-.my-area {
-  width: 100%;
-  height: 70px;
-  padding-top: 10.5px;
-  padding-left: 10px;
-}
-
-.search-area {
-  height: 50px;
-  text-align: center;
-}
-
-#search-bar {
-  border-bottom: 3px solid white;
-  border-right: 3px solid #ede7f6;
-  background-color: white;
-  width: 95%;
-  display: inline-block;
-  height: 100%; 
-}
-
-#search-bar:hover {
-  border-bottom: none !important;
-  text-decoration: none !important;
-}
-
-#search-bar:active {
-  border-bottom: none !important;
-  text-decoration: none !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .contatinho {
@@ -69,58 +34,76 @@ main {
   border-bottom: thin solid white;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.contatinho {
+  color: #000!important;
+}
+
+.contatinho:first-child {
+  border-top: initial;
+}
+
+.contatinho:last-child {
+  padding-bottom: 0;
+  border-bottom: initial;
 }
 
 .unseenMessages {
   border-radius: 50%;
   background-color: #673ab7;
-  width: 40px;
-  height: 40px;
+  width: 30px!important;
+  height: 30px!important;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 12px;
 }
 
 .contatinho:hover {
   background-color: rgb(217, 206, 221);
 }
 
-.contatinho:active {
-  background-color: rgb(167, 159, 170);
-}
-
 .middle-part {
-  width: 55%;
-  height: 100%;
   background-color: white;
   border-bottom: 3px solid #ede7f6;
+  display: grid;
+  grid-template-rows: 80px calc(100% - 160px) 80px;
+  height: calc(100vh - 80px);
 }
 
 .person-tab {
-  width: 100%;
-  height: 71px;
   padding-top: 10.5px;
   padding-left: 10px;
   background-color:  #ede7f6;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .little-img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
 }
 
-.written-part {
-  padding-left: 60px;
+.little-img:hover {
+  cursor: pointer;
 }
 
 .listener-letter {
   font-weight: bold;
   font-size: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
 }
 
 .status {
@@ -129,12 +112,12 @@ main {
 }
 
 #area-chat {
-  height: 900px;
-  width: 100%;
   display: flex;
   flex-direction: column-reverse;
   overflow-y: auto;
   scroll-behavior: smooth;
+  height: 100%;
+  padding: 10px 0;
 }
 
 .other-ballon {
@@ -191,13 +174,23 @@ main {
 }
 
 .menu-chat {
-  width: 100%;
-  height: 100px;
-  bottom: 0;
-  padding-top: 20px;
-  margin-top: 57px;
-  text-align: center;
-  background-color:#ede7f6 ;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  background-color:  #ede7f6;
+}
+
+.menu-chat input {
+  width: auto;
+  color: #000;
+  display: block;
+  margin-left: 10px!important;
+  margin-right: 10px!important;
+}
+
+.menu-chat input::placeholder {
+  color: #000!important;
 }
 
 .type-msg {
@@ -214,7 +207,6 @@ main {
 }
 
 .btn-send {
-  margin-left: -15px;
   width: 50px;
   height: 50px;
   border-radius: 100%;
@@ -223,12 +215,9 @@ main {
 
 .user-big-area {
   padding-top: 25px;
-  width: 20%;
-  height: 100%;
   border-left: 3px solid white;
   text-align: center;
   background-color: #ede7f6;
-  float: right;
 }
 
 .big-user-photo {
@@ -243,17 +232,32 @@ main {
   font-weight: bold;
 }
 
-.row-options {
-  width: 100%;
-  height: 60px;
-  padding-top: 20px;
+#release {
+  border-radius: 4px;
+  border: initial;
+  background-color: rgb(10, 223, 39);
+  color: #fff;
   font-weight: bold;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-top: 10px;
 }
 
-.row-options:hover {
-  background-color: rgb(217, 206, 221);
+#release:hover {
+  cursor: pointer;
 }
 
-.row-options:active {
-  background-color: rgb(167, 159, 170);
+#alreadyBought {
+  border-radius: 4px;
+  border: initial;
+  background-color: #ddd;
+  color: #000;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-top: 10px;
+}
+
+#email {
+  padding: 10px;
+  font-size: 18px;
 }

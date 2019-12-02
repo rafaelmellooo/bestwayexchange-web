@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { BounceLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { Form, Input } from '@rocketseat/unform';
+import Modal from 'react-modal';
 import * as Yup from 'yup';
 import Address from '../../../components/Address';
+import NewAddress from './NewAddress';
 import api from '../../../services/api';
 
 import './styles.css';
@@ -15,12 +17,15 @@ const schema = Yup.object().shape({
     .required('A descrição deve ser informada'),
 });
 
+Modal.setAppElement('#root');
+
 function InfoSection({ id }) {
   const [loading, setLoading] = useState(true);
   const [agencyInfo, setAgencyInfo] = useState({});
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [addresses, setAddresses] = useState({});
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   const loadAgencyInfo = async () => {
     const { data } = await api.get(`/agencies/${id}`);
@@ -49,6 +54,13 @@ function InfoSection({ id }) {
       .then(() => loadAddresses()
         .then(() => setLoading(false)));
   }, [id]);
+
+  const closeModal = async () => {
+    setIsOpen(false);
+    setLoading(true);
+    await loadAddresses();
+    setLoading(false);
+  };
 
   return loading ? (
     <BounceLoader
@@ -87,11 +99,11 @@ function InfoSection({ id }) {
       </article>
 
       <article id="addresses">
-        <div id="add">
+        <button type="button" onClick={() => setIsOpen(true)} id="add">
           <p style={{ color: '#fff' }}>
             <i style={{ fontSize: '96px' }} className="material-icons">add</i>
           </p>
-        </div>
+        </button>
         {
           addresses.map((address) => (
             <Address
@@ -107,6 +119,14 @@ function InfoSection({ id }) {
           ))
         }
       </article>
+
+      <Modal
+        isOpen={modalIsOpen}
+        style={{ overlay: { zIndex: 1 } }}
+        onRequestClose={() => setIsOpen(false)}
+      >
+        <NewAddress id={id} closeModal={closeModal} />
+      </Modal>
     </>
   );
 }
