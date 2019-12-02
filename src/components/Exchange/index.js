@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './styles.css';
 
 function Exchange({
-  id, name, exchangeType, time, country, city, filename,
+  id, name, exchangeType, time, country, city, filename, price, createdAt
 }) {
   return (
     <div key={id} style={{ marginLeft: '25px', marginRight: '25px' }}>
@@ -19,6 +19,24 @@ function Exchange({
             <li>{`Duração: ${time} meses`}</li>
             <li>{`País: ${country}`}</li>
             <li>{`Cidade: ${city}`}</li>
+            <li>
+              Preço:
+              <b style={{ marginLeft: '5px' }}>
+                R$
+                {price}
+                ,00
+              </b>
+            </li>
+            <li
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                fontSize: '16px',
+              }}
+            >
+              {createdAt}
+            </li>
           </ul>
           <Link to={`/exchanges/${id}/dashboard`} className="redirect">EU QUERO</Link>
         </div>

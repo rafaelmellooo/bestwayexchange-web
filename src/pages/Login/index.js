@@ -30,7 +30,7 @@ function Login({ history, location }) {
 
       localStorage.setItem('token', token);
 
-      const { data: { id, type } } = await api.get('/dashboard');
+      const { data: { agency, id, type } } = await api.get('/dashboard');
 
       localStorage.setItem('id', id);
 
@@ -40,7 +40,13 @@ function Login({ history, location }) {
 
       if (type.id === 2) { history.push('/admin'); }
 
-      if (type.id === 3) { history.push('/admin'); }
+      if (type.id === 3) {
+        if (agency) {
+          history.push('/admin');
+        } else {
+          history.push('/agencies/new');
+        }
+      }
     } catch (err) {
       const mistakes = {
         400: () => toast.error(err.response.data.error),

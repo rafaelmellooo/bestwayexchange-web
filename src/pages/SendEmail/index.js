@@ -13,7 +13,7 @@ function SendEmail({ history }) {
     setLoading(true);
     try {
       await api.post('/auth/send_email', { email });
-      toast.success('E-mail enviado com sucesso', {
+      toast.success(`E-mail de confirmação enviado para ${email}`, {
         onClose: () => history.push('/'),
       });
     } catch (err) {

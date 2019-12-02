@@ -1,11 +1,5 @@
-.intercambios {
-  width: 80%; 
-  background-color: white;
-  text-align: center;
-}
- 
-.intercambios_bigdiv {
-  display: flex;
-  justify-content: center;
-  width: 80%;
+article#exchanges {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
 }
