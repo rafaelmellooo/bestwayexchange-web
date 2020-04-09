@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .redirect {
   background-color: #0097a7;
   color: #fff!important;
@@ -17,3 +18,24 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+=======
+.redirect {
+  background-color: #0097a7;
+  color: #fff!important;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 10px;
+  width: 100%;
+  display: block;
+}
+
+.attributes {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.attributes li {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+>>>>>>> d7340d23752bdaf5024eaed13b27def1447c9a3b

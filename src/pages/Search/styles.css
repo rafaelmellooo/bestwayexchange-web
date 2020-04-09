@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 article#exchanges {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 10px;
 }
+=======
+article#exchanges {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+>>>>>>> d7340d23752bdaf5024eaed13b27def1447c9a3b
