@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@rocketseat/unform": "^1.6.1",
-    "apexcharts": "^3.10.1",
+    "apexcharts": "^3.24.0",
     "axios": "0.18.1",
     "materialize-css": "^1.0.0",
     "query-string": "^6.9.0",
